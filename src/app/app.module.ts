@@ -3,35 +3,26 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {TestComponent} from './test/test.component';
-import {TuiBadge, TuiBadgedContentComponent, TuiButtonSelect} from '@taiga-ui/kit';
-import {
-  TuiAlert,
-  TuiButton,
-  TuiDataListComponent,
-  TuiFlagPipe,
-  TuiOptGroup,
-  TuiOption,
-  TuiTextfieldDropdownDirective,
-} from '@taiga-ui/core';
+import {TuiBadgedContentComponent, TuiButtonSelect} from '@taiga-ui/kit';
+import {TuiRoot} from '@taiga-ui/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import {LoginPageComponent} from './login-page/login-page.component';
+import {ProfilePageComponent} from './profile-page/profile-page.component';
+import {LayoutComponent} from './layout/layout.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SidebarMenuComponent} from './sidebar-menu/sidebar-menu.component';
 
 @NgModule({
-  declarations: [AppComponent, TestComponent],
+  declarations: [AppComponent, LoginPageComponent, ProfilePageComponent, LayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     TuiBadgedContentComponent,
-    TuiFlagPipe,
-    TuiOptGroup,
-    TuiDataListComponent,
-    TuiButton,
     ReactiveFormsModule,
     TuiButtonSelect,
-    TuiTextfieldDropdownDirective,
-    TuiOption,
-    TuiBadge,
-    TuiAlert,
+    BrowserAnimationsModule,
+    TuiRoot,
+    SidebarMenuComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

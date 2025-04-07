@@ -1,11 +1,28 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {TestComponent} from './test/test.component';
+import {LoginPageComponent} from './login-page/login-page.component';
+import {ProfilePageComponent} from './profile-page/profile-page.component';
+import {LayoutComponent} from './layout/layout.component';
+import {ErrorComponentComponent} from './error-component/error-component.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TestComponent,
+    component: LayoutComponent,
+    children: [
+      {
+        path: 'profile',
+        component: ProfilePageComponent,
+      },
+    ],
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent,
+  },
+  {
+    path: '**',
+    component: ErrorComponentComponent,
   },
 ];
 

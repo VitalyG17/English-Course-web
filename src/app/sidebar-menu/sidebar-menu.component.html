@@ -1,0 +1,80 @@
+<header tuiNavigationHeader>
+  <hr />
+  <button iconStart="@tui.bell" tuiIconButton type="button">
+    <tui-badge-notification />
+  </button>
+  <label tuiOption>
+    <input size="s" tuiSwitch type="checkbox" [(ngModel)]="switchColor" (ngModelChange)="onColor($event)" />
+  </label>
+</header>
+<div style="display: flex; height: 95vh">
+  <aside style="height: 100%" [tuiNavigationAside]="expanded()">
+    <button iconStart="@tui.home" tuiAsideItem type="button">
+      <span tuiFade>Главная</span>
+    </button>
+    <button iconStart="@tui.search" tuiAsideItem type="button">
+      Поиск
+      <ng-container *ngIf="expanded()">
+        <tui-badge size="m" appearance="accent">1</tui-badge>
+      </ng-container>
+    </button>
+    <button iconStart="@tui.book-open" tuiAsideItem type="button">Курсы</button>
+    <button iconStart="@tui.calendar-days" tuiAsideItem type="button">Календарь</button>
+    <button iconStart="@tui.star" tuiAsideItem type="button">Избранное</button>
+    <button
+      iconEnd="@tui.chevron-right"
+      iconStart="@tui.ellipsis"
+      tuiAsideItem
+      tuiDropdownHover
+      tuiDropdownOpen
+      type="button"
+      [tuiDropdown]="more"
+    >
+      Дополнительно
+      <ng-template #more>
+        <tui-data-list tuiDataListDropdownManager>
+          <button iconStart="@tui.pencil" tuiAsideItem type="button">Словарь</button>
+          <button iconStart="@tui.pie-chart" tuiAsideItem type="button" [tuiDropdown]="submenu">
+            Графики прогресса за
+            <ng-template #submenu>
+              <tui-data-list>
+                <button tuiAsideItem type="button">Неделю</button>
+                <button tuiAsideItem type="button">Месяц</button>
+              </tui-data-list>
+            </ng-template>
+          </button>
+        </tui-data-list>
+      </ng-template>
+    </button>
+
+    <footer>
+      <tui-aside-group>
+        <button automation-id="setting" iconStart="@tui.settings" tuiAsideItem tuiChevron type="button">
+          Настройки
+          <ng-template>
+            <button tuiAsideItem type="button">Настройка 1</button>
+            <button tuiAsideItem type="button">Настройка 2</button>
+            <button tuiAsideItem type="button">Настройка 3</button>
+          </ng-template>
+        </button>
+      </tui-aside-group>
+      <button
+        tuiAsideItem
+        type="button"
+        [iconStart]="expanded() ? '@tui.chevron-left' : '@tui.chevron-right'"
+        (click)="handleToggle()"
+      >
+        {{ expanded() ? 'Свернуть' : 'Раскрыть' }}
+      </button>
+      <hr />
+      <button style="padding: 0.13rem" tuiAsideItem type="button">
+        <tui-avatar
+          style="--t-radius: 0"
+          [src]="'https://clck.ru/3Kyq6G' | tuiFallbackSrc: '@tui.user' | async"
+          size="s"
+        />
+        <span>Ryan Gosling</span>
+      </button>
+    </footer>
+  </aside>
+</div>

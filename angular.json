@@ -12,7 +12,8 @@
           "inlineTemplate": false,
           "prefix": "",
           "style": "scss",
-          "standalone": false
+          "standalone": false,
+          "changeDetection": "OnPush"
         },
         "@schematics/angular:directive": {
           "prefix": "",
@@ -39,6 +40,7 @@
                 "glob": "**/*",
                 "input": "public"
               },
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "node_modules/@taiga-ui/icons/src",
@@ -105,11 +107,18 @@
             "styles": ["src/styles.css"],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }
