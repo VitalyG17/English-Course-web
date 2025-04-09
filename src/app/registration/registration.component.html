@@ -1,0 +1,26 @@
+<div class="wrapper tui-space_top-3" [tuiDateFormat]="{mode: 'DMY'}">
+  <tui-input-date
+    [required]="true"
+    [tuiDateFormat]="{separator: '.'}"
+    [max]="maxDate"
+    [formControl]="registrationForm.controls.birthDate.value"
+  >
+    Дата рождения
+    <input tuiTextfieldLegacy />
+  </tui-input-date>
+</div>
+
+<tui-input-phone [required]="true" [formControl]="registrationForm.controls.phoneNumber.value">
+  Номер телефона
+</tui-input-phone>
+
+<tui-input
+  *ngIf="registrationForm.controls.email.value | tuiEmails: autocompleteEmails as emails"
+  class="tui-requierd"
+  [formControl]="registrationForm.controls.email.value"
+>
+  Email
+  <ng-template *ngIf="emails.length" tuiDataList>
+    <tui-data-list-wrapper [items]="emails" />
+  </ng-template>
+</tui-input>

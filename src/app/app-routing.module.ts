@@ -4,6 +4,7 @@ import {LoginPageComponent} from './login-page/login-page.component';
 import {ProfilePageComponent} from './profile-page/profile-page.component';
 import {LayoutComponent} from './layout/layout.component';
 import {ErrorComponentComponent} from './error-component/error-component.component';
+import {RegistrationComponent} from './registration/registration.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent,
+  },
+  {
+    path: 'registration',
+    component: RegistrationComponent,
   },
   {
     path: '**',
