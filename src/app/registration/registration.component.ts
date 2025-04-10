@@ -6,6 +6,7 @@ import {TuiDay} from '@taiga-ui/cdk';
 import {TuiDataListWrapper, TuiEmailsPipe} from '@taiga-ui/kit';
 import {EmailEnum} from '../../shared/enum/EmailEnum';
 import {NgIf} from '@angular/common';
+import {RegistrationFormType} from './shared/registrationFormGroup';
 
 @Component({
   selector: 'registration',
@@ -30,7 +31,7 @@ export class RegistrationComponent {
   protected readonly maxDate: TuiDay = TuiDay.currentLocal();
   protected readonly autocompleteEmails: string[] = Object.values(EmailEnum);
 
-  registrationForm: FormGroup = new FormGroup({
+  registrationForm: FormGroup<RegistrationFormType> = new FormGroup({
     birthDate: new FormControl<TuiDay | null>(null),
     phoneNumber: new FormControl<string | null>('', Validators.minLength(12)),
     email: new FormControl<string | null>('', Validators.required),

@@ -1,0 +1,12 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+}
+
+.form-container > div,
+.form-container tui-input-phone,
+.form-container tui-input {
+  width: 20%;
+}
