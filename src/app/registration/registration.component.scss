@@ -1,12 +1,12 @@
 .form-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 3vh;
 }
 
-.form-container > div,
-.form-container tui-input-phone,
-.form-container tui-input {
-  width: 20%;
+.registration-form {
+  max-width: 42rem;
+  width: 100%;
+  margin-top: 5rem;
+  border-radius: 5%;
 }

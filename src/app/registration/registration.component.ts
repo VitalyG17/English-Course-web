@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {TuiDataList, TuiDateFormat} from '@taiga-ui/core';
+import {TuiDataList, TuiTextfield, TuiDateFormat, TuiIcon, TuiAppearance, TuiTitle, TuiError} from '@taiga-ui/core';
 import {TuiInputDateModule, TuiInputModule, TuiInputPhoneModule} from '@taiga-ui/legacy';
 import {TuiDay} from '@taiga-ui/cdk';
-import {TuiDataListWrapper, TuiEmailsPipe} from '@taiga-ui/kit';
+import {TuiDataListWrapper, TuiEmailsPipe, TuiFieldErrorPipe, TuiPassword} from '@taiga-ui/kit';
 import {EmailEnum} from '../../shared/enum/EmailEnum';
-import {NgIf} from '@angular/common';
+import {AsyncPipe, NgIf} from '@angular/common';
 import {RegistrationFormType} from './shared/registrationFormGroup';
+import {TuiForm, TuiHeader} from '@taiga-ui/layout';
 
 @Component({
   selector: 'registration',
@@ -25,6 +26,16 @@ import {RegistrationFormType} from './shared/registrationFormGroup';
     TuiEmailsPipe,
     NgIf,
     TuiDataList,
+    TuiTextfield,
+    TuiPassword,
+    TuiIcon,
+    TuiError,
+    TuiFieldErrorPipe,
+    AsyncPipe,
+    TuiForm,
+    TuiAppearance,
+    TuiHeader,
+    TuiTitle,
   ],
 })
 export class RegistrationComponent {
@@ -32,8 +43,11 @@ export class RegistrationComponent {
   protected readonly autocompleteEmails: string[] = Object.values(EmailEnum);
 
   registrationForm: FormGroup<RegistrationFormType> = new FormGroup({
-    birthDate: new FormControl<TuiDay | null>(null),
+    name: new FormControl<string | null>('', Validators.required),
+    surname: new FormControl<string | null>('', Validators.required),
+    birthDate: new FormControl<TuiDay | null>(null, Validators.required),
     phoneNumber: new FormControl<string | null>('', Validators.minLength(12)),
     email: new FormControl<string | null>('', Validators.required),
+    password: new FormControl<string | null>('', [Validators.required, Validators.minLength(8)]),
   });
 }
