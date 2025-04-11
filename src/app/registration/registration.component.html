@@ -5,6 +5,7 @@
     tuiAppearance="floating"
     tuiForm="l"
     [formGroup]="registrationForm"
+    (ngSubmit)="onSubmit()"
   >
     <header tuiHeader>
       <h2 tuiTitle>Регистрация</h2>
@@ -55,5 +56,8 @@
       <input tuiTextfield type="password" [formControl]="registrationForm.controls.password" />
       <tui-icon tuiPassword />
     </tui-textfield>
+
+    <button tuiButton type="submit" [disabled]="registrationForm.invalid">Регистрация</button>
   </form>
+  <img src="assets/img/logo.png" alt="logo" class="big-logo" />
 </div>
