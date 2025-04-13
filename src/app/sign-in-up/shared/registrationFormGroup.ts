@@ -1,6 +1,11 @@
 import {FormControl} from '@angular/forms';
 import {TuiDay} from '@taiga-ui/cdk';
 
+export enum RegistrationFormTypeMode {
+  REGISTRATION = 0,
+  LOGIN = 1,
+}
+
 export interface RegistrationForm {
   name: FormControl<string | null>;
   surname: FormControl<string | null>;
@@ -12,4 +17,13 @@ export interface RegistrationForm {
 
 export type RegistrationFormType = {
   [key in keyof RegistrationForm]: FormControl<RegistrationForm[key]['value']>;
+};
+
+export interface LoginForm {
+  email: FormControl<string | null>;
+  password: FormControl<string | null>;
+}
+
+export type LoginFormType = {
+  [key in keyof LoginForm]: FormControl<LoginForm[key]['value']>;
 };

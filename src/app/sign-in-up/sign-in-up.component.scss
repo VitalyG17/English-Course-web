@@ -6,7 +6,7 @@
   gap: 10vh;
 }
 
-.registration-form {
+.auth-form {
   max-width: 52vh;
   width: 100vh;
   border-radius: 5%;
@@ -15,4 +15,10 @@
 .big-logo {
   width: 35vh;
   height: 35vh;
+}
+
+.flx-col-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
 }

@@ -6,14 +6,13 @@ import {AppComponent} from './app.component';
 import {TuiBadgedContentComponent, TuiButtonSelect} from '@taiga-ui/kit';
 import {TuiRoot} from '@taiga-ui/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {LoginPageComponent} from './login-page/login-page.component';
 import {ProfilePageComponent} from './profile-page/profile-page.component';
 import {LayoutComponent} from './layout/layout.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SidebarMenuComponent} from './sidebar-menu/sidebar-menu.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, ProfilePageComponent, LayoutComponent],
+  declarations: [AppComponent, ProfilePageComponent, LayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

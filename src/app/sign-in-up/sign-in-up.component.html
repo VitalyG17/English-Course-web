@@ -1,0 +1,105 @@
+<div class="form-container">
+  <form class="auth-form" style="padding: 2%" tuiAppearance="floating" tuiForm="l" (ngSubmit)="onSubmit()">
+    <header tuiHeader>
+      <h2 style="text-align: center" tuiTitle>
+        {{ modeControl.value === RegistrationFormTypeMode.LOGIN ? 'Вход' : 'Регистрация' }}
+      </h2>
+    </header>
+
+    <tui-segmented size="m">
+      <label style="width: 50%">
+        <input name="radio" type="radio" [formControl]="modeControl" [value]="RegistrationFormTypeMode.LOGIN" />
+        <tui-icon icon="@tui.key-round" />
+        Вход
+      </label>
+      <label style="width: 50%">
+        <input name="radio" type="radio" [formControl]="modeControl" [value]="RegistrationFormTypeMode.REGISTRATION" />
+        <tui-icon icon="@tui.user-round-plus" />
+        Регистрация
+      </label>
+    </tui-segmented>
+
+    <!--Форма входа-->
+    <ng-container *ngIf="modeControl.value === RegistrationFormTypeMode.LOGIN">
+      <div class="flx-col-gap" [formGroup]="loginForm">
+        <tui-input
+          *ngIf="loginForm.controls['email'].value ?? '' | tuiEmails: autocompleteEmails as emails"
+          formControlName="email"
+          class="tui-requierd"
+          [required]="true"
+        >
+          Email
+          <ng-template *ngIf="emails.length" tuiDataList>
+            <tui-data-list-wrapper [items]="emails" />
+          </ng-template>
+        </tui-input>
+        <tui-error [formControlName]="'email'" [error]="[] | tuiFieldError | async" />
+
+        <tui-textfield>
+          <label tuiLabel>Пароль</label>
+          <input tuiTextfield type="password" formControlName="password" />
+          <tui-icon tuiPassword />
+        </tui-textfield>
+        <tui-error [formControlName]="'password'" [error]="[] | tuiFieldError | async" />
+      </div>
+    </ng-container>
+
+    <!--Форма регистрации-->
+    <ng-container *ngIf="modeControl.value === RegistrationFormTypeMode.REGISTRATION">
+      <div class="flx-col-gap" [formGroup]="registrationForm">
+        <tui-textfield>
+          <label tuiLabel>Имя</label>
+          <input tuiTextfield formControlName="name" />
+        </tui-textfield>
+        <tui-error [formControlName]="'name'" [error]="[] | tuiFieldError | async" />
+
+        <tui-textfield>
+          <label tuiLabel>Фамилия</label>
+          <input tuiTextfield formControlName="surname" />
+        </tui-textfield>
+        <tui-error [formControlName]="'surname'" [error]="[] | tuiFieldError | async" />
+
+        <div class="wrapper tui-space_top-3" [tuiDateFormat]="{mode: 'DMY'}">
+          <tui-input-date
+            formControlName="birthDate"
+            [required]="true"
+            [tuiDateFormat]="{separator: '.'}"
+            [max]="maxDate"
+          >
+            Дата рождения
+            <input tuiTextfieldLegacy />
+          </tui-input-date>
+        </div>
+        <tui-error [formControlName]="'birthDate'" [error]="[] | tuiFieldError | async" />
+
+        <tui-input-phone formControlName="phoneNumber" [required]="true"> Номер телефона </tui-input-phone>
+        <tui-error [formControlName]="'phoneNumber'" [error]="[] | tuiFieldError | async" />
+
+        <tui-input
+          *ngIf="registrationForm.controls['email'].value ?? '' | tuiEmails: autocompleteEmails as emails"
+          formControlName="email"
+          class="tui-requierd"
+          [required]="true"
+        >
+          Email
+          <ng-template *ngIf="emails.length" tuiDataList>
+            <tui-data-list-wrapper [items]="emails" />
+          </ng-template>
+        </tui-input>
+        <tui-error [formControlName]="'email'" [error]="[] | tuiFieldError | async" />
+
+        <tui-textfield>
+          <label tuiLabel>Пароль</label>
+          <input tuiTextfield type="password" formControlName="password" />
+          <tui-icon tuiPassword />
+        </tui-textfield>
+        <tui-error [formControlName]="'password'" [error]="[] | tuiFieldError | async" />
+      </div>
+    </ng-container>
+
+    <button tuiButton type="submit" [disabled]="currentForm.invalid">
+      {{ modeControl.value === RegistrationFormTypeMode.LOGIN ? 'Войти' : 'Регистрация' }}
+    </button>
+  </form>
+  <img src="assets/img/logo.png" alt="logo" class="big-logo" />
+</div>
