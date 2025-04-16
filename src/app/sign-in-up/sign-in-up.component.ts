@@ -19,6 +19,8 @@ import {LoginFormType, RegistrationFormType, RegistrationFormTypeMode} from './s
 import {TuiForm, TuiHeader} from '@taiga-ui/layout';
 import {Router} from '@angular/router';
 import {Subject, takeUntil} from 'rxjs';
+import {AuthService} from './shared/services/auth.service';
+import {SnackBarService} from '../../shared/services/snack-bar.service';
 
 @Component({
   selector: 'sign-in-up',
@@ -50,9 +52,13 @@ import {Subject, takeUntil} from 'rxjs';
     TuiButton,
     TuiSegmented,
   ],
+  providers: [AuthService, SnackBarService],
 })
 export class SignInUpComponent implements OnInit, OnDestroy {
   private readonly router: Router = inject(Router);
+  private readonly authService: AuthService = inject(AuthService);
+  private readonly snackBarService: SnackBarService = inject(SnackBarService);
+
   private readonly destroy$: Subject<void> = new Subject<void>();
 
   protected readonly maxDate: TuiDay = TuiDay.currentLocal();
@@ -96,6 +102,8 @@ export class SignInUpComponent implements OnInit, OnDestroy {
       // this.regService.register(this.registrationForm.value).subscribe(res => {
       //   this.router.navigate(['/success-page']);
       // });
+    } else {
+      this.snackBarService.errorShow('Ошибка авторизации');
     }
   }
 
@@ -109,6 +117,8 @@ export class SignInUpComponent implements OnInit, OnDestroy {
       // this.authService.login(this.loginForm.value).subscribe(res => {
       //   this.router.navigate(['/success-page']);
       // });
+    } else {
+      this.snackBarService.errorShow('Ошибка входа');
     }
   }
 

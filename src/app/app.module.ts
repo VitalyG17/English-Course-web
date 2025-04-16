@@ -10,6 +10,8 @@ import {ProfilePageComponent} from './profile-page/profile-page.component';
 import {LayoutComponent} from './layout/layout.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SidebarMenuComponent} from './sidebar-menu/sidebar-menu.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, ProfilePageComponent, LayoutComponent],
@@ -22,6 +24,12 @@ import {SidebarMenuComponent} from './sidebar-menu/sidebar-menu.component';
     BrowserAnimationsModule,
     TuiRoot,
     SidebarMenuComponent,
+    HttpClientModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
