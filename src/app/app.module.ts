@@ -3,15 +3,17 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {TuiBadgedContentComponent, TuiButtonSelect} from '@taiga-ui/kit';
-import {TuiRoot} from '@taiga-ui/core';
+import {TuiAvatar, TuiBadgedContentComponent, TuiButtonSelect} from '@taiga-ui/kit';
+import {TuiFallbackSrcPipe, TuiRoot} from '@taiga-ui/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ProfilePageComponent} from './profile-page/profile-page.component';
 import {LayoutComponent} from './layout/layout.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SidebarMenuComponent} from './sidebar-menu/sidebar-menu.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, provideHttpClient, withInterceptors} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
+import {AuthService} from './sign-in-up/shared/services/auth.service';
+import {authInterceptor} from './sign-in-up/shared/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, ProfilePageComponent, LayoutComponent],
@@ -30,8 +32,10 @@ import {ToastrModule} from 'ngx-toastr';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    TuiAvatar,
+    TuiFallbackSrcPipe,
   ],
-  providers: [],
+  providers: [AuthService, provideHttpClient(withInterceptors([authInterceptor]))],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

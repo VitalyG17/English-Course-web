@@ -30,6 +30,7 @@
     "@taiga-ui/icons": "^4.31.0",
     "@taiga-ui/kit": "^4.31.0",
     "@taiga-ui/layout": "^4.31.0",
+    "ngx-cookie-service": "^19.1.2",
     "ngx-toastr": "^19.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~7.8.0",

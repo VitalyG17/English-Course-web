@@ -27,3 +27,12 @@ export interface LoginForm {
 export type LoginFormType = {
   [key in keyof LoginForm]: FormControl<LoginForm[key]['value']>;
 };
+
+export interface RegistrationDto {
+  name: string | null;
+  surname: string | null;
+  birthDate: TuiDay | null;
+  phoneNumber: string | null;
+  email: string | null;
+  password: string | null;
+}

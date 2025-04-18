@@ -18,7 +18,7 @@ import {AsyncPipe, NgIf} from '@angular/common';
 import {LoginFormType, RegistrationFormType, RegistrationFormTypeMode} from './shared/registrationFormGroup';
 import {TuiForm, TuiHeader} from '@taiga-ui/layout';
 import {Router} from '@angular/router';
-import {Subject, takeUntil} from 'rxjs';
+import {Subject, takeUntil, tap} from 'rxjs';
 import {AuthService} from './shared/services/auth.service';
 import {SnackBarService} from '../../shared/services/snack-bar.service';
 
@@ -52,7 +52,7 @@ import {SnackBarService} from '../../shared/services/snack-bar.service';
     TuiButton,
     TuiSegmented,
   ],
-  providers: [AuthService, SnackBarService],
+  providers: [SnackBarService],
 })
 export class SignInUpComponent implements OnInit, OnDestroy {
   private readonly router: Router = inject(Router);
@@ -98,10 +98,17 @@ export class SignInUpComponent implements OnInit, OnDestroy {
 
     if (this.registrationForm.valid) {
       console.log('Регистрация:', this.registrationForm.value);
-      // TODO: Реализовать сервис для регистрации
-      // this.regService.register(this.registrationForm.value).subscribe(res => {
-      //   this.router.navigate(['/success-page']);
-      // });
+      this.authService
+        .register(this.registrationForm.getRawValue())
+        .pipe(
+          tap(() => {
+            this.snackBarService.successShow('Вы успешно зарегистрировались! Страница будет перезагружена через 3сек.');
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          }, takeUntil(this.destroy$)),
+        )
+        .subscribe();
     } else {
       this.snackBarService.errorShow('Ошибка авторизации');
     }
@@ -112,13 +119,14 @@ export class SignInUpComponent implements OnInit, OnDestroy {
     this.loginForm.updateValueAndValidity();
 
     if (this.loginForm.valid) {
-      console.log('Вход:', this.loginForm.value);
-      // TODO: Реализовать сервис для логина
-      // this.authService.login(this.loginForm.value).subscribe(res => {
-      //   this.router.navigate(['/success-page']);
-      // });
+      this.authService
+        .login(this.loginForm.getRawValue())
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.router.navigate(['/profile']);
+        });
     } else {
-      this.snackBarService.errorShow('Ошибка входа');
+      this.snackBarService.errorShow('Пожалуйста, введите корректные email и пароль.');
     }
   }
 
