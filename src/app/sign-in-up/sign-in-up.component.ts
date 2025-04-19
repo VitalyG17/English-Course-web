@@ -102,10 +102,8 @@ export class SignInUpComponent implements OnInit, OnDestroy {
         .register(this.registrationForm.getRawValue())
         .pipe(
           tap(() => {
-            this.snackBarService.successShow('Вы успешно зарегистрировались! Страница будет перезагружена через 3сек.');
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+            this.snackBarService.successShow('Вы успешно зарегистрировались!');
+            this.modeControl.setValue(RegistrationFormTypeMode.LOGIN);
           }, takeUntil(this.destroy$)),
         )
         .subscribe();
