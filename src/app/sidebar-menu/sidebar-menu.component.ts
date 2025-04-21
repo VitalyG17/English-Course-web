@@ -41,7 +41,7 @@ import {TuiNavigation} from '@taiga-ui/layout';
 export class SidebarMenuComponent {
   private readonly theme: TuiThemeColorService = inject(TuiThemeColorService);
 
-  protected expanded: WritableSignal<boolean> = signal(false);
+  protected expanded: WritableSignal<boolean> = signal(true);
   protected open: boolean = false;
   protected switchColor: boolean = false;
   protected color: boolean = false;

@@ -1,0 +1,23 @@
+<div tuiAppearance="floating" tuiCardMedium style="width: 100%">
+  <div class="header-wrapper">
+    <header tuiHeader>
+      <h1 tuiTitle>Дни обучения</h1>
+    </header>
+    <header tuiHeader>
+      <h1 tuiTitle>Серия ежедневных занятий</h1>
+    </header>
+  </div>
+
+  <div class="progress-training-wrapper">
+    <div class="days-grid">
+      <ng-container *ngFor="let day of days">
+        <div class="day">
+          <tui-avatar *ngIf="day.active" size="m" [src]="'assets/img/fire-activity.png'"></tui-avatar>
+          <span *ngIf="!day.active" class="inactive-circle"></span>
+          <div class="day-label">{{ day.short }}</div>
+        </div>
+      </ng-container>
+    </div>
+    <span class="info-number">12</span>
+  </div>
+</div>

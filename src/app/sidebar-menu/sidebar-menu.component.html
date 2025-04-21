@@ -7,8 +7,8 @@
     <input size="s" tuiSwitch type="checkbox" [(ngModel)]="switchColor" (ngModelChange)="onColor($event)" />
   </label>
 </header>
-<div style="display: flex; height: 95vh">
-  <aside style="height: 100%" [tuiNavigationAside]="expanded()">
+<div style="display: flex; height: 100%">
+  <aside [tuiNavigationAside]="expanded()">
     <button iconStart="@tui.home" tuiAsideItem type="button">
       <span tuiFade>Главная</span>
     </button>

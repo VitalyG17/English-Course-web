@@ -1,0 +1,24 @@
+<div class="language-progress">
+  <header tuiHeader>
+    <h1 tuiTitle>Знание языка</h1>
+  </header>
+  <div class="chart-wrapper">
+    <div class="wrapper">
+      <tui-arc-chart size="xl" maxLabel="" minLabel="" [value]="[50]" />
+      <tui-arc-chart class="stacked" size="xl" maxLabel="" minLabel="" [value]="[50]">
+        <span class="tui-arc-chart__content">50%</span>
+      </tui-arc-chart>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="cards__element" tuiAppearance="floating" tuiCardMedium>
+      <h2 tuiTitle>Изучено слов</h2>
+      <h1>125</h1>
+    </div>
+    <div class="cards__element" tuiAppearance="floating" tuiCardMedium>
+      <h2 tuiTitle>Достижения</h2>
+      <h1>17/100</h1>
+    </div>
+  </div>
+</div>

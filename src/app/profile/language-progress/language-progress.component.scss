@@ -1,0 +1,41 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.scss';
+
+.wrapper {
+  position: relative;
+  --tui-chart-0: var(--tui-chart-categorical-03);
+}
+
+.stacked {
+  @include fullsize();
+
+  --tui-background-neutral-1: transparent;
+  --tui-chart-0: var(--tui-chart-categorical-04);
+}
+
+.chart-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.language-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.stacked .tui-arc-chart__content {
+  font-size: 34px;
+}
+
+.cards {
+  display: flex;
+  gap: 1rem;
+
+  &__element {
+    padding: 0.75rem;
+    inline-size: 22rem;
+    justify-content: start;
+    gap: 40%;
+  }
+}

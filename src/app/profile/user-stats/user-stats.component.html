@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="weekly-progress" tuiAppearance="floating" tuiCardMedium>
+    <h2 tuiTitle>
+      Уроков пройдено на этой<br />
+      неделе
+    </h2>
+
+    <div class="row">
+      <div class="progress-info">
+        <h2 class="count">35</h2>
+        <tui-badge class="badge badge__up">
+          <tui-icon icon="@tui.trending-up" />
+          10 %
+        </tui-badge>
+      </div>
+
+      <div class="chart-wrapper">
+        <tui-line-chart [filled]="true" [height]="60" [width]="35" [smoothingFactor]="10" [value]="firstValue" />
+      </div>
+    </div>
+  </div>
+
+  <div class="weekly-progress" tuiAppearance="floating" tuiCardMedium>
+    <h2 tuiTitle>Ошибок за урок в среднем</h2>
+
+    <div class="row">
+      <div class="progress-info">
+        <h2 class="count">10</h2>
+        <tui-badge class="badge badge__down">
+          <tui-icon icon="@tui.trending-down" />
+          9 %
+        </tui-badge>
+      </div>
+
+      <div class="chart-wrapper">
+        <tui-line-chart [filled]="true" [height]="60" [width]="35" [smoothingFactor]="10" [value]="secondValue" />
+      </div>
+    </div>
+  </div>
+
+  <div tuiAppearance="floating" tuiCardMedium class="weekly-progress">
+    <h2 tuiTitle>Какой-то показатель</h2>
+
+    <div class="row">
+      <div class="progress-info">
+        <h2 class="count">10</h2>
+        <tui-badge class="badge badge__up">
+          <tui-icon icon="@tui.trending-up" />
+          25 %
+        </tui-badge>
+      </div>
+
+      <div class="chart-wrapper">
+        <tui-line-chart [filled]="true" [height]="60" [width]="35" [smoothingFactor]="10" [value]="secondValue" />
+      </div>
+    </div>
+  </div>
+</div>
