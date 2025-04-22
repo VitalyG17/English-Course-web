@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {TuiAvatar} from '@taiga-ui/kit';
 import {TuiFallbackSrcPipe} from '@taiga-ui/core';
 import {AsyncPipe} from '@angular/common';
@@ -11,4 +11,13 @@ import {AsyncPipe} from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TuiAvatar, TuiFallbackSrcPipe, AsyncPipe],
 })
-export class ProfileHeaderComponent {}
+export class ProfileHeaderComponent {
+  @Input()
+  public name: string | null = null;
+
+  @Input()
+  public surname: string | null = null;
+
+  @Input()
+  public email: string | null = null;
+}

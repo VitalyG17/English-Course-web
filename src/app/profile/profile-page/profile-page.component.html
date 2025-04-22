@@ -1,5 +1,9 @@
 <header class="profile-page__header">
-  <profile-header></profile-header>
+  <profile-header
+    [name]="profileInfo().name"
+    [surname]="profileInfo().surname"
+    [email]="profileInfo().email"
+  ></profile-header>
 </header>
 
 <main class="profile-page__main">

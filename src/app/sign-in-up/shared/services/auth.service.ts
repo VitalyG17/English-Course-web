@@ -1,23 +1,25 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../../../shared/types/user';
-import {catchError, Observable, tap, throwError} from 'rxjs';
+import {catchError, EMPTY, Observable, tap, throwError} from 'rxjs';
 import {AuthResponseDto} from '../auth.interface';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {RegistrationDto} from '../registrationFormGroup';
+import {SnackBarService} from '../../../../shared/services/snack-bar.service';
 
 @Injectable()
 export class AuthService {
-  private readonly baseApiurl: string = 'http://localhost:3000/auth';
+  private readonly baseApiUrl: string = 'http://localhost:3000/auth';
 
   public accessToken: string | null = null;
   public refreshToken: string | null = null;
 
   constructor(
-    private httpClient: HttpClient,
-    private cookieService: CookieService,
-    private router: Router,
+    private readonly httpClient: HttpClient,
+    private readonly cookieService: CookieService,
+    private readonly snackBarService: SnackBarService,
+    private readonly router: Router,
   ) {}
 
   get isAuth() {
@@ -29,24 +31,34 @@ export class AuthService {
   }
 
   public login(user: User): Observable<AuthResponseDto> {
-    return this.httpClient.post<AuthResponseDto>(`${this.baseApiurl}/login`, user).pipe(
+    return this.httpClient.post<AuthResponseDto>(`${this.baseApiUrl}/login`, user).pipe(
       tap((val: AuthResponseDto) => {
         this.saveTokens(val);
+      }),
+      catchError((err: unknown) => {
+        console.error(err);
+        this.snackBarService.errorShow('Ошибка входа');
+        return EMPTY;
       }),
     );
   }
 
   public register(user: RegistrationDto): Observable<AuthResponseDto> {
-    return this.httpClient.post<AuthResponseDto>(`${this.baseApiurl}/register`, user).pipe(
+    return this.httpClient.post<AuthResponseDto>(`${this.baseApiUrl}/register`, user).pipe(
       tap((val: AuthResponseDto) => {
         this.saveTokens(val);
+      }),
+      catchError((err: unknown) => {
+        console.error(err);
+        this.snackBarService.errorShow('Ошибка регистрации');
+        return EMPTY;
       }),
     );
   }
 
   public refreshAuthToken() {
     return this.httpClient
-      .post<AuthResponseDto>(`${this.baseApiurl}/refresh`, {
+      .post<AuthResponseDto>(`${this.baseApiUrl}/refresh`, {
         refresh_token: this.refreshToken,
       })
       .pipe(
@@ -62,7 +74,7 @@ export class AuthService {
     this.accessToken = res.accessToken;
     this.refreshToken = res.refreshToken;
 
-    this.cookieService.set('token', this.accessToken);
+    this.cookieService.set('accessToken', this.accessToken);
     this.cookieService.set('refreshToken', this.refreshToken);
   }
 

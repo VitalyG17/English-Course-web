@@ -97,14 +97,14 @@ export class SignInUpComponent implements OnInit, OnDestroy {
     this.registrationForm.updateValueAndValidity();
 
     if (this.registrationForm.valid) {
-      console.log('Регистрация:', this.registrationForm.value);
       this.authService
         .register(this.registrationForm.getRawValue())
         .pipe(
+          takeUntil(this.destroy$),
           tap(() => {
             this.snackBarService.successShow('Вы успешно зарегистрировались!');
             this.modeControl.setValue(RegistrationFormTypeMode.LOGIN);
-          }, takeUntil(this.destroy$)),
+          }),
         )
         .subscribe();
     } else {
