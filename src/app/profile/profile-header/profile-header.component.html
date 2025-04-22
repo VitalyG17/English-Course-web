@@ -2,7 +2,7 @@
   <tui-avatar [size]="'xxl'" [src]="'https://clck.ru/3Kyq6G' | tuiFallbackSrc: '@tui.user' | async" />
 
   <div class="username-and-mail">
-    <h1 class="mb8">{{ name }} {{ surname }}</h1>
-    <span>{{ email }}</span>
+    <h1 class="mb8">{{ profileInfo?.name }} {{ profileInfo?.surname }}</h1>
+    <span>{{ profileInfo?.email }}</span>
   </div>
 </div>

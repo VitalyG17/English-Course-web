@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {TuiAvatar} from '@taiga-ui/kit';
 import {TuiFallbackSrcPipe} from '@taiga-ui/core';
 import {AsyncPipe} from '@angular/common';
+import {Profile} from '../shared/models/profile.model';
 
 @Component({
   selector: 'profile-header',
@@ -13,11 +14,5 @@ import {AsyncPipe} from '@angular/common';
 })
 export class ProfileHeaderComponent {
   @Input()
-  public name: string | null = null;
-
-  @Input()
-  public surname: string | null = null;
-
-  @Input()
-  public email: string | null = null;
+  public profileInfo: Profile | null = null;
 }
