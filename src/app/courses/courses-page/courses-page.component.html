@@ -1,0 +1,16 @@
+<main class="courses-page__main">
+  <ng-container *ngFor="let course of coursesInfo()">
+    <button class="courses-page__button" tuiCardLarge tuiHeader tuiSurface="floating" type="button">
+      <h1 tuiTitle>
+        {{ course.title }}
+        <span tuiSubtitle>{{ course.description }}</span>
+      </h1>
+
+      <aside>
+        <tui-avatar
+          size="l"
+          [src]="course.imageUrl | tuiFallbackSrc: '@tui.star' | async" />
+      </aside>
+    </button>
+  </ng-container>
+</main>

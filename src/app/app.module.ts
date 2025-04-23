@@ -22,6 +22,8 @@ import {LanguageProgressComponent} from './profile/language-progress/language-pr
 import {TuiCardLarge} from '@taiga-ui/layout';
 import {ProfileService} from './profile/shared/services/profile.service';
 import {SnackBarService} from '../shared/services/snack-bar.service';
+import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
+import {CoursesService} from './courses/courses-page/shared/services/courses.service';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -50,8 +52,15 @@ import {SnackBarService} from '../shared/services/snack-bar.service';
     UserStatsComponent,
     ProgressTrainingDaysComponent,
     ProfileHeaderComponent,
+    CoursesPageComponent,
   ],
-  providers: [AuthService, ProfileService, SnackBarService, provideHttpClient(withInterceptors([authInterceptor]))],
+  providers: [
+    AuthService,
+    ProfileService,
+    CoursesService,
+    SnackBarService,
+    provideHttpClient(withInterceptors([authInterceptor])),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

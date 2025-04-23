@@ -1,0 +1,14 @@
+.courses-page {
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 24px 1rem;
+  }
+
+  &__button {
+    width: 50%;
+  }
+}
