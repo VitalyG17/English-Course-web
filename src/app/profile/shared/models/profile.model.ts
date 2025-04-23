@@ -1,5 +1,5 @@
 export class Profile {
-  avatarUrl: string | null;
+  avatarUrl: string;
   birthDate: string;
   createdAt: string;
   email: string;
@@ -10,7 +10,7 @@ export class Profile {
   updatedAt: string;
 
   constructor(
-    avatarUrl: string | null = null,
+    avatarUrl: string = '',
     birthDate: string = '',
     createdAt: string = '',
     email: string = '',

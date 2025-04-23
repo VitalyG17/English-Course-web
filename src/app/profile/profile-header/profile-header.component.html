@@ -1,8 +1,22 @@
 <div class="wrapper">
-  <tui-avatar [size]="'xxl'" [src]="'https://clck.ru/3Kyq6G' | tuiFallbackSrc: '@tui.user' | async" />
+  <label>
+    <tui-avatar
+      class="clickable-avatar"
+      [size]="'xxl'"
+      [src]="profileInfo.avatarUrl | tuiFallbackSrc: '@tui.user' | async"
+      [tuiHint]="tooltip"
+      [tuiHintAppearance]="'dark'"
+      [tuiHintDirection]="'left'"
+    />
+    <input type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+  </label>
 
   <div class="username-and-mail">
-    <h1 class="mb8">{{ profileInfo?.name }} {{ profileInfo?.surname }}</h1>
-    <span>{{ profileInfo?.email }}</span>
+    <h1 class="mb8">{{ profileInfo.name }} {{ profileInfo.surname }}</h1>
+    <span>{{ profileInfo.email }}</span>
   </div>
 </div>
+
+<ng-template #tooltip>
+  <span>Обновить фото</span>
+</ng-template>
