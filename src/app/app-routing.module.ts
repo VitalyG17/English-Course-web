@@ -6,6 +6,7 @@ import {ErrorComponentComponent} from './error-component/error-component.compone
 import {SignInUpComponent} from './sign-in-up/sign-in-up.component';
 import {canActivateAuth} from './sign-in-up/shared/guards/access.guard';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
+import {AchievementsComponent} from './achievements/achievements.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: 'courses',
         component: CoursesPageComponent,
+      },
+      {
+        path: 'achievements',
+        component: AchievementsComponent,
       },
     ],
     canActivate: [canActivateAuth],

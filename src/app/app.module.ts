@@ -24,6 +24,7 @@ import {ProfileService} from './profile/shared/services/profile.service';
 import {SnackBarService} from '../shared/services/snack-bar.service';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
 import {CoursesService} from './courses/courses-page/shared/services/courses.service';
+import {AchievementsComponent} from './achievements/achievements.component';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -53,6 +54,7 @@ import {CoursesService} from './courses/courses-page/shared/services/courses.ser
     ProgressTrainingDaysComponent,
     ProfileHeaderComponent,
     CoursesPageComponent,
+    AchievementsComponent,
   ],
   providers: [
     AuthService,

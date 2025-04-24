@@ -13,6 +13,7 @@ import {
   TuiSwitch,
 } from '@taiga-ui/kit';
 import {TuiNavigation} from '@taiga-ui/layout';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'sidebar-menu',
@@ -36,6 +37,7 @@ import {TuiNavigation} from '@taiga-ui/layout';
     TuiSwitch,
     TuiFallbackSrcPipe,
     AsyncPipe,
+    RouterModule,
   ],
 })
 export class SidebarMenuComponent {
