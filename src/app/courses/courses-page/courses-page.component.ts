@@ -1,12 +1,14 @@
 import {ChangeDetectionStrategy, Component, computed, inject, signal, Signal, WritableSignal} from '@angular/core';
 import {TuiAppearance, TuiFallbackSrcPipe, TuiSurface, TuiTitle} from '@taiga-ui/core';
-import {TuiAvatar, TuiPagination} from '@taiga-ui/kit';
+import {TuiAvatar, TuiFilter, TuiPagination} from '@taiga-ui/kit';
 import {TuiCardLarge, TuiCell, TuiHeader} from '@taiga-ui/layout';
 import {AsyncPipe, NgForOf} from '@angular/common';
 import {CoursesService} from './shared/services/courses.service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
 import {Courses} from './shared/models/courses.model';
+import {FormsModule} from '@angular/forms';
+import {Difficulty} from './shared/enum/Difficulty';
 
 @Component({
   selector: 'courses-page',
@@ -26,6 +28,8 @@ import {Courses} from './shared/models/courses.model';
     TuiAppearance,
     TuiCell,
     TuiPagination,
+    TuiFilter,
+    FormsModule,
   ],
 })
 export class CoursesPageComponent {
@@ -43,20 +47,38 @@ export class CoursesPageComponent {
     {initialValue: []},
   );
 
+  protected readonly filteredCourses: Signal<Courses[]> = computed(() => {
+    if (this.filters().length === 0) return this.coursesInfo();
+    return this.coursesInfo().filter((course: Courses) => this.filters().includes(course.difficulty));
+  });
+
+  protected readonly items: Difficulty[] = Object.values(Difficulty);
+  protected readonly pageSize: number = 20;
   protected readonly index: WritableSignal<number> = signal(0);
 
   protected readonly paginatedCourses: Signal<Courses[]> = computed(() => {
     const start: number = this.index() * this.pageSize;
     const end: number = start + this.pageSize;
 
-    return this.coursesInfo().slice(start, end);
+    return this.filteredCourses().slice(start, end);
   });
 
-  protected readonly totalPages: Signal<number> = computed(() => Math.ceil(this.coursesInfo().length / this.pageSize));
+  protected readonly totalPages: Signal<number> = computed(() =>
+    Math.ceil(this.filteredCourses().length / this.pageSize),
+  );
 
-  protected readonly pageSize: number = 20;
+  protected readonly filters: WritableSignal<string[]> = signal<string[]>([]);
+
+  protected readonly model: Signal<string[]> = computed(() =>
+    this.filters().length === this.items.length ? [] : this.filters(),
+  );
 
   protected goToPage(index: number): void {
     this.index.set(index);
+  }
+
+  protected onFilterChange(filters: string[]): void {
+    this.filters.set(filters);
+    this.index.set(0);
   }
 }

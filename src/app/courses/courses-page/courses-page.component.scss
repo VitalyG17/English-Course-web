@@ -1,3 +1,5 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.scss';
+
 .courses-page {
   &__main {
     padding: 24px 10rem;
@@ -7,5 +9,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: inherit;
+  }
+
+  &__filters {
+    display: flex;
+    flex-direction: row;
   }
 }

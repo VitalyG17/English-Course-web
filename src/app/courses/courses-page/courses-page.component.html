@@ -4,14 +4,16 @@
       <h1 tuiTitle>Курсы</h1>
     </header>
 
+    <tui-filter size="m" [items]="items" [ngModel]="model()" (ngModelChange)="onFilterChange($event)" />
+
     <section class="courses-page__grid">
       <ng-container *ngFor="let course of paginatedCourses()">
         <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
           <div tuiCell="l">
-            <div tuiTitle>
+            <span tuiTitle>
               {{ course.title }}
               <div tuiSubtitle>{{ course.description }}</div>
-            </div>
+            </span>
           </div>
 
           <aside>
