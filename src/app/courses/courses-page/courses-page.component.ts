@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
-import {TuiFallbackSrcPipe, TuiSurface, TuiTitle} from '@taiga-ui/core';
-import {TuiAvatar} from '@taiga-ui/kit';
-import {TuiCardLarge, TuiHeader} from '@taiga-ui/layout';
+import {ChangeDetectionStrategy, Component, computed, inject, signal, Signal, WritableSignal} from '@angular/core';
+import {TuiAppearance, TuiFallbackSrcPipe, TuiSurface, TuiTitle} from '@taiga-ui/core';
+import {TuiAvatar, TuiPagination} from '@taiga-ui/kit';
+import {TuiCardLarge, TuiCell, TuiHeader} from '@taiga-ui/layout';
 import {AsyncPipe, NgForOf} from '@angular/common';
 import {CoursesService} from './shared/services/courses.service';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -14,7 +14,19 @@ import {Courses} from './shared/models/courses.model';
   templateUrl: './courses-page.component.html',
   styleUrl: './courses-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TuiAvatar, TuiCardLarge, TuiHeader, TuiSurface, TuiTitle, NgForOf, AsyncPipe, TuiFallbackSrcPipe],
+  imports: [
+    TuiAvatar,
+    TuiCardLarge,
+    TuiHeader,
+    TuiSurface,
+    TuiTitle,
+    NgForOf,
+    AsyncPipe,
+    TuiFallbackSrcPipe,
+    TuiAppearance,
+    TuiCell,
+    TuiPagination,
+  ],
 })
 export class CoursesPageComponent {
   private readonly coursesService: CoursesService = inject(CoursesService);
@@ -30,4 +42,21 @@ export class CoursesPageComponent {
     ),
     {initialValue: []},
   );
+
+  protected readonly index: WritableSignal<number> = signal(0);
+
+  protected readonly paginatedCourses: Signal<Courses[]> = computed(() => {
+    const start: number = this.index() * this.pageSize;
+    const end: number = start + this.pageSize;
+
+    return this.coursesInfo().slice(start, end);
+  });
+
+  protected readonly totalPages: Signal<number> = computed(() => Math.ceil(this.coursesInfo().length / this.pageSize));
+
+  protected readonly pageSize: number = 20;
+
+  protected goToPage(index: number): void {
+    this.index.set(index);
+  }
 }

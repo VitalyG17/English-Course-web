@@ -1,16 +1,26 @@
 <main class="courses-page__main">
-  <ng-container *ngFor="let course of coursesInfo()">
-    <button class="courses-page__button" tuiCardLarge tuiHeader tuiSurface="floating" type="button">
-      <h1 tuiTitle>
-        {{ course.title }}
-        <span tuiSubtitle>{{ course.description }}</span>
-      </h1>
+  <div tuiAppearance="floating" tuiCardLarge>
+    <header tuiHeader>
+      <h1 tuiTitle>Курсы</h1>
+    </header>
 
-      <aside>
-        <tui-avatar
-          size="l"
-          [src]="course.imageUrl | tuiFallbackSrc: '@tui.star' | async" />
-      </aside>
-    </button>
-  </ng-container>
+    <section class="courses-page__grid">
+      <ng-container *ngFor="let course of paginatedCourses()">
+        <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
+          <div tuiCell="l">
+            <div tuiTitle>
+              {{ course.title }}
+              <div tuiSubtitle>{{ course.description }}</div>
+            </div>
+          </div>
+
+          <aside>
+            <tui-avatar size="l" [src]="course.imageUrl | tuiFallbackSrc: '@tui.star' | async" />
+          </aside>
+        </button>
+      </ng-container>
+    </section>
+
+    <tui-pagination [index]="index()" [length]="totalPages()" (indexChange)="goToPage($event)" />
+  </div>
 </main>
