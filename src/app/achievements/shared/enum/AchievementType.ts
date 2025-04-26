@@ -1,0 +1,7 @@
+export enum AchievementType {
+  AVATAR_UPLOADED,
+  DAYS_ACTIVE,
+  WORDS_LEARNED,
+  TESTS_COMPLETED,
+  REGISTRATION,
+}

@@ -1,1 +1,37 @@
-<p>achievements works!</p>
+<main class="achievements-page__main">
+  <div tuiAppearance="floating" tuiCardLarge>
+    <header tuiHeader>
+      <h1 tuiTitle>Достижения</h1>
+    </header>
+
+    <section class="achievements-page__grid">
+      <ng-container *ngFor="let achievement of achievementsInfo()">
+        <button
+          class="achievement-card"
+          tuiCardLarge
+          tuiHeader
+          tuiSurface="floating"
+          type="button"
+          [disabled]="!achievement.isAchieved"
+        >
+          <tui-avatar
+            style="--t-radius: 1rem"
+            size="xl"
+            [src]="achievement.iconUrl | tuiFallbackSrc: '@tui.star' | async"
+          />
+          <div class="achievement-details">
+            <h3 tuiTitle>
+              {{ achievement.title }}
+            </h3>
+            <progress style="width: 15rem" size="m" tuiProgressBar [max]="100" [value]="90"></progress>
+            <span tuiSubtitle>{{ achievement.description }}</span>
+          </div>
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="!achievementsInfo()?.length">
+        <p>Ошибка получения достижений или список пуст.</p>
+      </ng-container>
+    </section>
+  </div>
+</main>

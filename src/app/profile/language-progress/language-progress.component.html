@@ -16,9 +16,9 @@
       <h2 tuiTitle>Изучено слов</h2>
       <h1>125</h1>
     </button>
-    <button class="cards__element" tuiAppearance="floating" tuiCardMedium type="button"  routerLink="/achievements">
+    <button class="cards__element" tuiAppearance="floating" tuiCardMedium type="button" routerLink="/achievements">
       <h2 tuiTitle>Достижения</h2>
-      <h1>17/100</h1>
+      <h1>{{ achievementsProgress().achieved }}/{{ achievementsProgress().total }}</h1>
     </button>
   </div>
 </div>

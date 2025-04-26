@@ -25,6 +25,7 @@ import {SnackBarService} from '../shared/services/snack-bar.service';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
 import {CoursesService} from './courses/courses-page/shared/services/courses.service';
 import {AchievementsComponent} from './achievements/achievements.component';
+import {AchievementsService} from './achievements/shared/services/achievements.service';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -60,6 +61,7 @@ import {AchievementsComponent} from './achievements/achievements.component';
     AuthService,
     ProfileService,
     CoursesService,
+    AchievementsService,
     SnackBarService,
     provideHttpClient(withInterceptors([authInterceptor])),
   ],

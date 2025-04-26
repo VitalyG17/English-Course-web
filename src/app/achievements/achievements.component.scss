@@ -1,0 +1,15 @@
+.achievements-page {
+  &__main {
+    padding: 24px 10rem;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: inherit;
+  }
+}
+
+.achievement-card {
+  gap: 20px
+}
