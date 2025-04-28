@@ -82,6 +82,6 @@ export class AuthService {
     this.cookieService.deleteAll();
     this.accessToken = null;
     this.refreshToken = null;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth']);
   }
 }
