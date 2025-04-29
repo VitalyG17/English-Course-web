@@ -1,0 +1,33 @@
+.courses-tests {
+  &__main {
+    padding: 24px 26rem;
+  }
+
+  &__header {
+    align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
+
+.tests-card {
+  display: flex;
+  justify-content: space-between;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.label-wrapper {
+  width: 20%;
+  color: black;
+}
+
+.progress {
+  color: var(--tui-text-positive);
+}

@@ -1,0 +1,44 @@
+<main class="courses-tests__main">
+  <div tuiAppearance="floating" tuiCardLarge>
+    <span class="courses-tests__header">
+      <h3 tuiTitle="m">{{ currentCourse()?.title }}</h3>
+      <label *ngIf="coursesTestInfo().length > 0" tuiProgressLabel class="label-wrapper">
+        {{ completedTestsCount() }} / {{ coursesTestInfo().length }}
+        <progress
+          class="progress"
+          size="xl"
+          tuiProgressBar
+          [max]="coursesTestInfo().length"
+          [value]="completedTestsCount()"
+        ></progress>
+      </label>
+    </span>
+    <ng-container *ngIf="coursesTestInfo().length > 0; else noTests">
+      <ng-container *ngFor="let coursesTest of coursesTestInfo(); let i = index">
+        <button
+          class="tests-card"
+          tuiCardLarge
+          tuiHeader
+          tuiSurface="floating"
+          type="button"
+          [disabled]="i > 0 && !coursesTestInfo()[i - 1].isCompleted"
+        >
+          <div class="tests-card__content">
+            <tui-avatar size="l" [src]="coursesTest.imageUrl | tuiFallbackSrc: '@tui.star' | async" />
+            <h1 tuiTitle>
+              {{ coursesTest.title }}
+            </h1>
+          </div>
+          <aside>
+            <tui-badge *ngIf="coursesTest.isCompleted" appearance="positive" tuiStatus> Пройден </tui-badge>
+            <tui-badge *ngIf="!coursesTest.isCompleted" appearance="negative" tuiStatus> Не пройден </tui-badge>
+          </aside>
+        </button>
+      </ng-container>
+    </ng-container>
+  </div>
+</main>
+
+<ng-template #noTests>
+  <span style="text-align: center; padding: 2rem">Для этого курса пока нет доступных тестов.</span>
+</ng-template>

@@ -26,6 +26,8 @@ import {CoursesPageComponent} from './courses/courses-page/courses-page.componen
 import {CoursesService} from './courses/courses-page/shared/services/courses.service';
 import {AchievementsComponent} from './achievements/achievements.component';
 import {AchievementsService} from './achievements/shared/services/achievements.service';
+import {CoursesTestsComponent} from './courses-tests/courses-tests.component';
+import {CoursesTestsService} from './courses-tests/shared/services/courses-tests.service';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -56,12 +58,14 @@ import {AchievementsService} from './achievements/shared/services/achievements.s
     ProfileHeaderComponent,
     CoursesPageComponent,
     AchievementsComponent,
+    CoursesTestsComponent,
   ],
   providers: [
     AuthService,
     ProfileService,
     CoursesService,
     AchievementsService,
+    CoursesTestsService,
     SnackBarService,
     provideHttpClient(withInterceptors([authInterceptor])),
   ],

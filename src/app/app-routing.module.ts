@@ -7,6 +7,7 @@ import {SignInUpComponent} from './sign-in-up/sign-in-up.component';
 import {canActivateAuth} from './sign-in-up/shared/guards/access.guard';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
 import {AchievementsComponent} from './achievements/achievements.component';
+import {CoursesTestsComponent} from './courses-tests/courses-tests.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'courses',
         component: CoursesPageComponent,
+      },
+      {
+        path: 'courses/:courseId/tests',
+        component: CoursesTestsComponent,
       },
       {
         path: 'achievements',

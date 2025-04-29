@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, computed, inject, signal, Signal, WritableSignal} from '@angular/core';
-import {TuiAppearance, TuiFallbackSrcPipe, TuiSurface, TuiTitle} from '@taiga-ui/core';
-import {TuiAvatar, TuiFilter, TuiPagination} from '@taiga-ui/kit';
+import {TuiAppearance, TuiFallbackSrcPipe, TuiIcon, TuiSurface, TuiTitle} from '@taiga-ui/core';
+import {TuiAvatar, TuiBadge, TuiBadgedContentDirective, TuiFilter, TuiPagination} from '@taiga-ui/kit';
 import {TuiCardLarge, TuiCell, TuiHeader} from '@taiga-ui/layout';
 import {AsyncPipe, NgForOf} from '@angular/common';
 import {CoursesService} from './shared/services/courses.service';
@@ -9,6 +9,7 @@ import {map} from 'rxjs';
 import {Courses} from './shared/models/courses.model';
 import {FormsModule} from '@angular/forms';
 import {Difficulty} from './shared/enum/Difficulty';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'courses-page',
@@ -30,13 +31,17 @@ import {Difficulty} from './shared/enum/Difficulty';
     TuiPagination,
     TuiFilter,
     FormsModule,
+    TuiBadgedContentDirective,
+    TuiIcon,
+    TuiBadge,
   ],
 })
 export class CoursesPageComponent {
   private readonly coursesService: CoursesService = inject(CoursesService);
+  private readonly router: Router = inject(Router);
 
   protected readonly coursesInfo: Signal<Courses[]> = toSignal(
-    this.coursesService.getAll().pipe(
+    this.coursesService.getAllWithProgress().pipe(
       map((courses: Courses[]) =>
         courses.map((course: Courses) => ({
           ...course,
@@ -80,5 +85,9 @@ export class CoursesPageComponent {
   protected onFilterChange(filters: string[]): void {
     this.filters.set(filters);
     this.index.set(0);
+  }
+
+  protected navigateToTests(courseId: number): void {
+    this.router.navigate(['/courses', courseId, 'tests']);
   }
 }

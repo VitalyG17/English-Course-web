@@ -8,7 +8,7 @@
 
     <section class="courses-page__grid">
       <ng-container *ngFor="let course of paginatedCourses()">
-        <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
+        <button tuiCardLarge tuiHeader tuiSurface="floating" type="button" (click)="navigateToTests(course.id)">
           <div tuiCell="l">
             <span tuiTitle>
               {{ course.title }}
@@ -19,6 +19,14 @@
           <aside>
             <tui-avatar size="l" [src]="course.imageUrl | tuiFallbackSrc: '@tui.star' | async" />
           </aside>
+          <tui-icon
+            size="m"
+            tuiBadge
+            tuiSlot="bottom"
+            [appearance]="course.isStarted ? 'positive' : 'negative'"
+            [icon]="course.isCompleted ? '@tui.check' : '@tui.book-open'"
+          >
+          </tui-icon>
         </button>
       </ng-container>
     </section>
