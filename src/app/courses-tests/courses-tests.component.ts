@@ -5,7 +5,7 @@ import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {TuiCardLarge, TuiHeader} from '@taiga-ui/layout';
 import {TuiAppearance, TuiFallbackSrcPipe, TuiSurface, TuiTitle} from '@taiga-ui/core';
 import {CoursesService} from '../courses/courses-page/shared/services/courses.service';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Courses} from '../courses/courses-page/shared/models/courses.model';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {distinctUntilChanged, filter, map, Observable, switchMap} from 'rxjs';
@@ -38,6 +38,7 @@ export class CoursesTestsComponent {
   private readonly coursesTestsService: CoursesTestsService = inject(CoursesTestsService);
   private readonly coursesService: CoursesService = inject(CoursesService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly router: Router = inject(Router);
 
   private readonly courseId$: Observable<number> = this.route.paramMap.pipe(
     map((params: ParamMap) => Number(params.get('courseId'))),
@@ -72,4 +73,8 @@ export class CoursesTestsComponent {
   protected readonly completedTestsCount: Signal<number> = computed(
     () => this.coursesTestInfo().filter((test: CoursesTests) => test.isCompleted).length,
   );
+
+  protected navigateToTasks(testId: number): void {
+    this.router.navigate(['/courses', this.currentCourse()?.id, 'tests', testId, 'tasks']);
+  }
 }

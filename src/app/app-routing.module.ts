@@ -8,6 +8,7 @@ import {canActivateAuth} from './sign-in-up/shared/guards/access.guard';
 import {CoursesPageComponent} from './courses/courses-page/courses-page.component';
 import {AchievementsComponent} from './achievements/achievements.component';
 import {CoursesTestsComponent} from './courses-tests/courses-tests.component';
+import {TasksPageComponent} from './tasks/tasks-page/tasks-page.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'courses/:courseId/tests',
         component: CoursesTestsComponent,
+      },
+      {
+        path: 'courses/:courseId/tests/:testId/tasks',
+        component: TasksPageComponent,
       },
       {
         path: 'achievements',

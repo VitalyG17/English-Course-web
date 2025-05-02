@@ -28,6 +28,10 @@ import {AchievementsComponent} from './achievements/achievements.component';
 import {AchievementsService} from './achievements/shared/services/achievements.service';
 import {CoursesTestsComponent} from './courses-tests/courses-tests.component';
 import {CoursesTestsService} from './courses-tests/shared/services/courses-tests.service';
+import {TasksPageComponent} from './tasks/tasks-page/tasks-page.component';
+import {MatchPairsComponent} from './tasks/match-pairs/match-pairs.component';
+import {FillBlankComponent} from './tasks/fill-blank/fill-blank.component';
+import {MultipleChoiceComponent} from './tasks/multiple-choice/multiple-choice.component';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -59,6 +63,10 @@ import {CoursesTestsService} from './courses-tests/shared/services/courses-tests
     CoursesPageComponent,
     AchievementsComponent,
     CoursesTestsComponent,
+    TasksPageComponent,
+    MatchPairsComponent,
+    FillBlankComponent,
+    MultipleChoiceComponent,
   ],
   providers: [
     AuthService,

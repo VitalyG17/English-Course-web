@@ -1,0 +1,34 @@
+<div class="pairs-grid">
+  <div class="pairs-grid__column">
+    <button
+      *ngFor="let left of leftWords()"
+      tuiButton
+      size="m"
+      class="pairs-grid__button"
+      [appearance]="getAppearance(left, Side.Left)"
+      [disabled]="disabledLeft().has(left)"
+      (click)="selectLeft(left)"
+    >
+      {{ left }}
+    </button>
+  </div>
+
+  <div class="pairs-grid__column">
+    <button
+      *ngFor="let right of rightWords()"
+      tuiButton
+      size="m"
+      class="pairs-grid__button"
+      [appearance]="getAppearance(right, Side.Right)"
+      [disabled]="disabledRight().has(right)"
+      (click)="selectRight(right)"
+    >
+      {{ right }}
+    </button>
+  </div>
+</div>
+
+<tui-action-bar *tuiActionBar="open()" size="m">
+  <span>Подсказка: {{ hintWord() ? getHint(hintWord()!) : 'Выберите слово слева' }}</span>
+  <button iconStart="@tui.x" tuiIconButton type="button" appearance="glass" (click)="closeHint()">Закрыть</button>
+</tui-action-bar>

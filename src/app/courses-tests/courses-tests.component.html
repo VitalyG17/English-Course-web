@@ -22,6 +22,7 @@
           tuiSurface="floating"
           type="button"
           [disabled]="i > 0 && !coursesTestInfo()[i - 1].isCompleted"
+          (click)="navigateToTasks(coursesTest.id)"
         >
           <div class="tests-card__content">
             <tui-avatar size="l" [src]="coursesTest.imageUrl | tuiFallbackSrc: '@tui.star' | async" />
