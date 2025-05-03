@@ -7,6 +7,7 @@ import {MultipleChoiceComponent} from '../multiple-choice/multiple-choice.compon
 import {TuiAppearance} from '@taiga-ui/core';
 import {TuiCardLarge} from '@taiga-ui/layout';
 import {TuiProgressBar, TuiProgressSegmented} from '@taiga-ui/kit';
+import {AudioTranslationComponent} from '../audio-translation/audio-translation.component';
 
 @Component({
   selector: 'tasks-page',
@@ -24,13 +25,14 @@ import {TuiProgressBar, TuiProgressSegmented} from '@taiga-ui/kit';
     TuiCardLarge,
     TuiProgressBar,
     TuiProgressSegmented,
+    AudioTranslationComponent,
   ],
 })
 export class TasksPageComponent {
   protected taskTypeEnum: typeof TaskType = TaskType;
 
   protected currentTask = {
-    type: this.taskTypeEnum.MATCHING,
+    type: this.taskTypeEnum.AUDIO_TRANSLATION,
   };
 
   get taskTitle(): string {

@@ -1,0 +1,47 @@
+<div class="audio-translation">
+  <div class="audio-translation__player">
+    <audio #audio tuiMedia src="assets/media/A1_first.mp3" [(currentTime)]="currentTime" [(paused)]="paused"></audio>
+    <button
+      class="audio-translation__player-button"
+      appearance="info"
+      title="Воспроизвести/Пауза"
+      tuiIconButton
+      type="button"
+      [iconStart]="icon"
+      (click)="toggleState()"
+    ></button>
+  </div>
+
+  <div class="audio-translation__answer-area" tuiAppearance="floating" tuiCardLarge>
+    <div
+      class="audio-translation__answer"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <button
+        *ngFor="let option of selectedOptions(); let i = index"
+        tuiButton
+        appearance="primary"
+        size="m"
+        cdkDrag
+        [tuiSkeleton]="selectedOptions().length === 0"
+        (click)="removeOption(i)"
+      >
+        {{ option }}
+      </button>
+    </div>
+  </div>
+
+  <div class="audio-translation__options">
+    <button
+      *ngFor="let option of availableOptions()"
+      tuiButton
+      size="m"
+      appearance="secondary"
+      (click)="selectOption(option)"
+    >
+      {{ option }}
+    </button>
+  </div>
+</div>
