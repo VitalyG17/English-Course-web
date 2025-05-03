@@ -1,0 +1,38 @@
+.fill-blank {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  &__question-area {
+    width: 100%;
+    align-items: center !important;
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+  }
+}
+
+tui-input-inline {
+  &:has(input[placeholder]) {
+    min-inline-size: 3ch;
+    max-inline-size: 15ch;
+  }
+
+  input {
+    text-align: center;
+  }
+
+  &.filled {
+    input {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

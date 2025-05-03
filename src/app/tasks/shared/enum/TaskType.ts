@@ -6,7 +6,7 @@ export enum TaskType {
 }
 
 export const TASK_TYPE_TITLES: {[key in TaskType]: string} = {
-  [TaskType.FILL_IN_THE_BLANK]: 'Заполни пропуски',
+  [TaskType.FILL_IN_THE_BLANK]: 'Заполни пропуск',
   [TaskType.MATCHING]: 'Составь пары',
   [TaskType.MULTIPLE_CHOICE]: 'Выбери правильные варианты',
   [TaskType.AUDIO_TRANSLATION]: 'Напиши перевод аудиозаписи',

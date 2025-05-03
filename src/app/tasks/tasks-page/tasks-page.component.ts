@@ -32,7 +32,7 @@ export class TasksPageComponent {
   protected taskTypeEnum: typeof TaskType = TaskType;
 
   protected currentTask = {
-    type: this.taskTypeEnum.AUDIO_TRANSLATION,
+    type: this.taskTypeEnum.FILL_IN_THE_BLANK,
   };
 
   get taskTitle(): string {

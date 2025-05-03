@@ -1,1 +1,33 @@
-<p>fill-blank works!</p>
+<div class="fill-blank">
+  <div class="fill-blank__question-area" tuiAppearance="floating" tuiCardLarge>
+    <div class="fill-blank__question">
+      <ng-container *ngFor="let part of task.question">
+        <ng-container *ngIf="part !== '__BLANK__'; else blank">
+          {{ part }}
+        </ng-container>
+        <ng-template #blank>
+          <tui-input-inline [style.max-width.ch]="15" [class.filled]="selectedOption()">
+            <input
+              placeholder="___"
+              [ngModel]="selectedOption()"
+              (ngModelChange)="selectedOption.set($event)"
+              (click)="removeOption()"
+            />
+          </tui-input-inline>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="fill-blank__options">
+    <button
+      *ngFor="let option of availableOptions"
+      tuiButton
+      size="m"
+      [appearance]="selectedOption() === option ? 'primary' : 'secondary'"
+      (click)="selectOption(option)"
+    >
+      {{ option }}
+    </button>
+  </div>
+</div>
