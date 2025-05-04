@@ -1,0 +1,41 @@
+<div class="listening">
+  <div class="listening__player">
+    <audio #audio tuiMedia [src]="task.audioSrc" [(currentTime)]="currentTime" [(paused)]="paused"></audio>
+    <button
+      class="listening__player-button"
+      appearance="info"
+      title="Воспроизвести/Пауза"
+      tuiIconButton
+      type="button"
+      [iconStart]="icon"
+      (click)="toggleListening()"
+    ></button>
+  </div>
+
+  <div *ngIf="isSupported()" class="listening__recording">
+    <button
+      class="listening__recording-button"
+      tuiButton
+      type="button"
+      [appearance]="isSpeaking() ? 'accent' : 'primary'"
+      [iconEnd]="isSpeaking() ? '' : '@tui.mic'"
+      (click)="toggleSpeaking()"
+    >
+      {{ isSpeaking() ? 'Остановить запись' : 'Начать запись' }}
+      <tui-icon *ngIf="isSpeaking()" class="listening-indicator" icon="@tui.audio-lines"></tui-icon>
+    </button>
+  </div>
+
+  <div class="listening__answer-area">
+    <tui-textarea
+      *ngIf="isSupported()"
+      [readOnly]="!recognizedText()"
+      [expandable]="true"
+      [rows]="5"
+      [ngModel]="recognizedText() + interimText()"
+      (ngModelChange)="handleTextInput($event)"
+    >
+      Распознанный текст
+    </tui-textarea>
+  </div>
+</div>

@@ -28,6 +28,7 @@ export class AudioTranslationComponent {
   @Output() answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
 
   protected task = {
+    audioSrc: 'assets/media/A1_first.mp3',
     question: 'Match the words',
     options: ['Hi', 'Bye', 'I`m', 'do', 'what', 'Tanya', 'Masha', 'what`s', 'last name', 'your', 'her', 'name'],
     correctAnswer: ['Hi', 'I`m', 'Tanya', 'what`s', 'your', 'name'],

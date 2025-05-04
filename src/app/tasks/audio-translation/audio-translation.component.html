@@ -1,6 +1,6 @@
 <div class="audio-translation">
   <div class="audio-translation__player">
-    <audio #audio tuiMedia src="assets/media/A1_first.mp3" [(currentTime)]="currentTime" [(paused)]="paused"></audio>
+    <audio #audio tuiMedia [src]="task.audioSrc" [(currentTime)]="currentTime" [(paused)]="paused"></audio>
     <button
       class="audio-translation__player-button"
       appearance="info"

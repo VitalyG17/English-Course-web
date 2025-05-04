@@ -33,6 +33,7 @@ import {MatchPairsComponent} from './tasks/match-pairs/match-pairs.component';
 import {FillBlankComponent} from './tasks/fill-blank/fill-blank.component';
 import {MultipleChoiceComponent} from './tasks/multiple-choice/multiple-choice.component';
 import {AudioTranslationComponent} from './tasks/audio-translation/audio-translation.component';
+import {ListeningComponent} from './tasks/listening/listening.component';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -69,6 +70,7 @@ import {AudioTranslationComponent} from './tasks/audio-translation/audio-transla
     FillBlankComponent,
     MultipleChoiceComponent,
     AudioTranslationComponent,
+    ListeningComponent,
   ],
   providers: [
     AuthService,

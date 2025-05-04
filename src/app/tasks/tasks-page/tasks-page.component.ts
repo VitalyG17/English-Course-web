@@ -8,6 +8,7 @@ import {TuiAppearance} from '@taiga-ui/core';
 import {TuiCardLarge} from '@taiga-ui/layout';
 import {TuiProgressBar, TuiProgressSegmented} from '@taiga-ui/kit';
 import {AudioTranslationComponent} from '../audio-translation/audio-translation.component';
+import {ListeningComponent} from '../listening/listening.component';
 
 @Component({
   selector: 'tasks-page',
@@ -26,13 +27,14 @@ import {AudioTranslationComponent} from '../audio-translation/audio-translation.
     TuiProgressBar,
     TuiProgressSegmented,
     AudioTranslationComponent,
+    ListeningComponent,
   ],
 })
 export class TasksPageComponent {
   protected taskTypeEnum: typeof TaskType = TaskType;
 
   protected currentTask = {
-    type: this.taskTypeEnum.FILL_IN_THE_BLANK,
+    type: this.taskTypeEnum.LISTING,
   };
 
   get taskTitle(): string {
