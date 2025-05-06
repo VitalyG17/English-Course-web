@@ -34,6 +34,7 @@ import {FillBlankComponent} from './tasks/fill-blank/fill-blank.component';
 import {MultipleChoiceComponent} from './tasks/multiple-choice/multiple-choice.component';
 import {AudioTranslationComponent} from './tasks/audio-translation/audio-translation.component';
 import {ListeningComponent} from './tasks/listening/listening.component';
+import {TaskService} from './tasks/shared/services/task.service';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -78,6 +79,7 @@ import {ListeningComponent} from './tasks/listening/listening.component';
     CoursesService,
     AchievementsService,
     CoursesTestsService,
+    TaskService,
     SnackBarService,
     provideHttpClient(withInterceptors([authInterceptor])),
   ],

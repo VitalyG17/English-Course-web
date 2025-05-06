@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output, signal, WritableSignal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import {TuiInputInline} from '@taiga-ui/kit';
 import {FormsModule} from '@angular/forms';
 import {TuiAppearance, TuiButton} from '@taiga-ui/core';
@@ -13,20 +22,23 @@ import {NgForOf, NgIf} from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TuiInputInline, FormsModule, TuiAppearance, TuiCardLarge, NgForOf, TuiButton, NgIf],
 })
-export class FillBlankComponent {
+export class FillBlankComponent implements OnInit {
+  @Input() task: any;
+
   @Output() answer = new EventEmitter<{selected: string; isCorrect: boolean}>();
 
-  protected task = {
-    question: ['You ', '__BLANK__', ' funny.'],
-    options: ['are', 'is', 'am'],
-    correctAnswer: 'are',
-  };
-
   protected selectedOption: WritableSignal<string | null> = signal<string | null>(null);
-  protected availableOptions: string[] = this.task.options;
+  protected availableOptions: string[] = [];
+
+  ngOnInit() {
+    if (this.task?.options) {
+      this.availableOptions = this.task.options;
+    }
+  }
 
   protected selectOption(option: string): void {
     this.selectedOption.set(option);
+    this.checkAnswer();
   }
 
   protected removeOption(): void {

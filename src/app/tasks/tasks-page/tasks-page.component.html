@@ -1,17 +1,60 @@
 <div class="tasks-page__container">
   <div tuiAppearance="floating" tuiCardLarge>
-    <header class="tasks-page__header">
-      <progress tuiProgressBar style="width: 50%" [max]="10" [segments]="10" [value]="7"></progress>
-      <h2>{{ taskTitle }}</h2>
-    </header>
-    <main class="tasks-page__main">
-      <ng-container [ngSwitch]="currentTask.type">
-        <match-pairs *ngSwitchCase="taskTypeEnum.MATCHING"></match-pairs>
-        <fill-blank *ngSwitchCase="taskTypeEnum.FILL_IN_THE_BLANK"></fill-blank>
-        <multiple-choice *ngSwitchCase="taskTypeEnum.MULTIPLE_CHOICE"></multiple-choice>
-        <audio-translation *ngSwitchCase="taskTypeEnum.AUDIO_TRANSLATION"></audio-translation>
-        <listening *ngSwitchCase="taskTypeEnum.LISTING"></listening>
-      </ng-container>
-    </main>
+    <tui-loader [showLoader]="isLoading()" [overlay]="true" size="l">
+      <header class="tasks-page__header">
+        <progress
+          tuiProgressBar
+          style="width: 50%"
+          [max]="progress().max"
+          [segments]="progress().max"
+          [value]="progress().value"
+        ></progress>
+        <h2>{{ taskTitle() }}</h2>
+      </header>
+      <main class="tasks-page__main">
+        <ng-container *ngIf="tasks().length; else noTasks">
+          <ng-container *ngIf="currentTask(); let task" [ngSwitch]="task.type">
+            <match-pairs *ngSwitchCase="taskTypeEnum.MATCHING" (answer)="handleAnswer($event)"></match-pairs>
+            <fill-blank
+              *ngSwitchCase="taskTypeEnum.FILL_IN_THE_BLANK"
+              [task]="task"
+              (answer)="handleAnswer($event)"
+            ></fill-blank>
+            <multiple-choice *ngSwitchCase="taskTypeEnum.MULTIPLE_CHOICE"></multiple-choice>
+            <audio-translation
+              *ngSwitchCase="taskTypeEnum.AUDIO_TRANSLATION"
+              [task]="task"
+              (answer)="handleAnswer($event)"
+            ></audio-translation>
+            <listening *ngSwitchCase="taskTypeEnum.LISTING" [task]="task" (answer)="handleAnswer($event)"></listening>
+          </ng-container>
+        </ng-container>
+      </main>
+    </tui-loader>
+
+    <ng-container *ngIf="tasks().length">
+      <button
+        *ngIf="currentTaskIndex() < tasks().length - 1"
+        tuiButton
+        size="m"
+        [disabled]="!hasAnswered()"
+        (click)="nextTask()"
+      >
+        Следующее задание
+      </button>
+      <button
+        *ngIf="currentTaskIndex() === tasks().length - 1"
+        tuiButton
+        size="m"
+        [disabled]="!hasAnswered()"
+        (click)="completeTest()"
+      >
+        Завершить тест
+      </button>
+    </ng-container>
   </div>
 </div>
+
+<ng-template #noTasks>
+  <p>Задания не найдены.</p>
+</ng-template>

@@ -27,6 +27,7 @@ enum Side {
 })
 export class MatchPairsComponent {
   @Output() answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
+  //@Input() task: any;
 
   protected readonly Side: typeof Side = Side;
 

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -32,15 +33,9 @@ import {
 })
 export class ListeningComponent implements OnInit, OnDestroy {
   @Output() answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
+  @Input() task: any;
 
   private recognition: SpeechRecognition | null = null;
-
-  protected task = {
-    audioSrc: 'assets/media/A1_first.mp3',
-    correctAnswer: ["Hi I'm Tanya what's your name"],
-    type: 'LISTING',
-    recognitionLang: 'en-US',
-  };
 
   protected isSpeaking: WritableSignal<boolean> = signal(false);
   protected recognizedText: WritableSignal<string> = signal('');
@@ -97,6 +92,7 @@ export class ListeningComponent implements OnInit, OnDestroy {
         const newFinalText = this.capitalizeFirstLetter(finalTranscript.trim());
         this.recognizedText.update((text) => (text ? text + ' ' : '') + newFinalText);
         this.interimText.set('');
+        this.checkAnswer();
       }
       this.interimText.set(interimTranscript);
     };
@@ -114,6 +110,7 @@ export class ListeningComponent implements OnInit, OnDestroy {
 
     this.recognition.onend = () => {
       this.isSpeaking.set(false);
+      this.checkAnswer();
     };
 
     this.recognition.onstart = () => {
@@ -135,6 +132,7 @@ export class ListeningComponent implements OnInit, OnDestroy {
   protected handleTextInput(newText: string): void {
     this.recognizedText.set(newText);
     this.interimText.set('');
+    this.checkAnswer();
   }
 
   // TODO вернуться к реализации проверки

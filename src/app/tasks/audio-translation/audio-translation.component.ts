@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   EventEmitter,
+  Input,
   Output,
   Signal,
   signal,
@@ -26,14 +27,7 @@ import {CdkDragDrop, DragDropModule, moveItemInArray} from '@angular/cdk/drag-dr
 })
 export class AudioTranslationComponent {
   @Output() answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
-
-  protected task = {
-    audioSrc: 'assets/media/A1_first.mp3',
-    question: 'Match the words',
-    options: ['Hi', 'Bye', 'I`m', 'do', 'what', 'Tanya', 'Masha', 'what`s', 'last name', 'your', 'her', 'name'],
-    correctAnswer: ['Hi', 'I`m', 'Tanya', 'what`s', 'your', 'name'],
-    type: 'AUDIO_TRANSLATION',
-  };
+  @Input() task: any;
 
   protected currentTime: number = 0;
   protected paused: boolean = true;
