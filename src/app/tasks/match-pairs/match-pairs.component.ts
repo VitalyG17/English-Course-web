@@ -3,6 +3,9 @@ import {
   Component,
   computed,
   EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
   Output,
   Signal,
   signal,
@@ -11,6 +14,8 @@ import {
 import {TuiButton} from '@taiga-ui/core';
 import {NgForOf} from '@angular/common';
 import {TuiActionBarComponent, TuiActionBarDirective} from '@taiga-ui/kit';
+import {Task} from '../shared/interfaces/Task';
+import {Subject, takeUntil, timer} from 'rxjs';
 
 enum Side {
   Left = 'left',
@@ -25,32 +30,22 @@ enum Side {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TuiButton, NgForOf, TuiActionBarComponent, TuiActionBarDirective],
 })
-export class MatchPairsComponent {
-  @Output() answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
-  //@Input() task: any;
+export class MatchPairsComponent implements OnInit, OnDestroy {
+  @Output()
+  public answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
+
+  @Input()
+  public task: Task | null = null;
 
   protected readonly Side: typeof Side = Side;
-
-  protected task = {
-    question: 'Match the words',
-    options: ['cat:кошка', 'dog:собака', 'milk:молоко'],
-    correctAnswer: ['cat:кошка', 'dog:собака', 'milk:молоко'],
-    type: 'MATCH_PAIRS',
-  };
 
   private selectedLeft: WritableSignal<string | null> = signal<string | null>(null);
   private selectedRight: WritableSignal<string | null> = signal<string | null>(null);
   private matchedPairs: WritableSignal<[string, string][]> = signal<[string, string][]>([]);
 
-  private readonly parsedPairs = computed(() =>
-    this.task.options.map((opt) => {
-      const [left, right] = opt.split(':');
-      return {left, right};
-    }),
-  );
-
-  protected leftWords: Signal<string[]> = computed(() => this.parsedPairs().map((p) => p.left));
-  protected rightWords: WritableSignal<string[]> = signal(this.shuffle(this.parsedPairs().map((p) => p.right)));
+  private parsedPairs: Signal<any[]> = signal<string[]>([]);
+  protected leftWords: Signal<string[]> = signal<string[]>([]);
+  protected rightWords: Signal<string[]> = signal<string[]>([]);
 
   protected disabledLeft: WritableSignal<Set<string>> = signal<Set<string>>(new Set());
   protected disabledRight: WritableSignal<Set<string>> = signal<Set<string>>(new Set());
@@ -60,6 +55,26 @@ export class MatchPairsComponent {
 
   private failedAttempts: WritableSignal<Map<string, number>> = signal(new Map());
   private highlightNegative = signal<{left: string; right: string} | null>(null);
+
+  private destroy$: Subject<void> = new Subject<void>();
+
+  public ngOnInit() {
+    this.parsedPairs = computed(() => {
+      return (
+        this.task?.options?.map((opt: string) => {
+          const [left, right] = opt.split(':');
+          return {left, right};
+        }) ?? []
+      );
+    });
+    this.leftWords = computed(() => this.parsedPairs().map((p) => p.left));
+    this.rightWords = signal(this.shuffle(this.parsedPairs().map((p) => p.right)));
+  }
+
+  public ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   protected selectLeft(word: string) {
     this.handleSelect(word, Side.Left, this.selectedLeft, this.selectedRight, this.disabledLeft);
@@ -72,7 +87,7 @@ export class MatchPairsComponent {
   private processPair(left: string, right: string) {
     const pair: [string, string] = [left, right];
 
-    const isCorrect: boolean = this.task.correctAnswer.some((correct) => {
+    const isCorrect: boolean = this.normalizeCorrectAnswer().some((correct) => {
       const [cLeft, cRight] = correct.split(':');
       return cLeft === pair[0] && cRight === pair[1];
     });
@@ -88,7 +103,7 @@ export class MatchPairsComponent {
         this.hintWord.set(null);
       }
 
-      if (this.matchedPairs().length === this.task.correctAnswer.length) {
+      if (this.matchedPairs().length === this.task?.correctAnswer.length) {
         this.answer.emit({
           answer: this.matchedPairs(),
           isCorrect: this.isFullyCorrect(),
@@ -107,12 +122,14 @@ export class MatchPairsComponent {
         this.open.set(true);
       }
 
-      setTimeout(() => {
-        const current = this.highlightNegative();
-        if (current?.left === left && current?.right === right) {
-          this.highlightNegative.set(null);
-        }
-      }, 1000);
+      timer(1000)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          const current = this.highlightNegative();
+          if (current?.left === left && current?.right === right) {
+            this.highlightNegative.set(null);
+          }
+        });
     }
 
     this.selectedLeft.set(null);
@@ -120,7 +137,9 @@ export class MatchPairsComponent {
   }
 
   private isFullyCorrect(): boolean {
-    return this.task.correctAnswer.every((correct) => this.matchedPairs().some(([l, r]) => `${l}:${r}` === correct));
+    return this.normalizeCorrectAnswer().every((correct) =>
+      this.matchedPairs().some(([l, r]) => `${l}:${r}` === correct),
+    );
   }
 
   private handleSelect(
@@ -157,8 +176,11 @@ export class MatchPairsComponent {
   }
 
   protected getHint(left: string): string {
-    const pair = this.task.correctAnswer.find((p) => p.startsWith(`${left}:`));
-    return pair ? pair.split(':')[1] : 'Подсказка не найдена';
+    return (
+      this.normalizeCorrectAnswer()
+        .find((p: string) => p.startsWith(`${left}:`))
+        ?.split(':')[1] ?? 'Подсказка не найдена'
+    );
   }
 
   protected closeHint() {
@@ -168,5 +190,10 @@ export class MatchPairsComponent {
 
   private shuffle<T>(array: T[]): T[] {
     return [...array].sort(() => Math.random() - 0.5);
+  }
+
+  private normalizeCorrectAnswer(): string[] {
+    if (!this.task || !this.task.correctAnswer) return [];
+    return Array.isArray(this.task.correctAnswer) ? this.task.correctAnswer : [this.task.correctAnswer];
   }
 }

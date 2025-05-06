@@ -14,7 +14,11 @@
       <main class="tasks-page__main">
         <ng-container *ngIf="tasks().length; else noTasks">
           <ng-container *ngIf="currentTask(); let task" [ngSwitch]="task.type">
-            <match-pairs *ngSwitchCase="taskTypeEnum.MATCHING" (answer)="handleAnswer($event)"></match-pairs>
+            <match-pairs
+              *ngSwitchCase="taskTypeEnum.MATCHING"
+              [task]="task"
+              (answer)="handleAnswer($event)"
+            ></match-pairs>
             <fill-blank
               *ngSwitchCase="taskTypeEnum.FILL_IN_THE_BLANK"
               [task]="task"
