@@ -1,1 +1,21 @@
-<p>multiple-choice works!</p>
+<div class="multiple-choice">
+  <div class="multiple-choice__question-area" tuiAppearance="floating" tuiCardLarge>
+    <div class="multiple-choice__question">
+      <ng-container *ngFor="let part of task?.question">
+        <h4>{{ part }}</h4>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="multiple-choice__options">
+    <button
+      *ngFor="let option of availableOptions"
+      tuiButton
+      size="m"
+      [appearance]="selectedOption() === option ? 'primary' : 'secondary'"
+      (click)="selectOption(option)"
+    >
+      {{ option }}
+    </button>
+  </div>
+</div>

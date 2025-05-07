@@ -34,7 +34,7 @@ export class FillBlankComponent implements OnInit {
   protected hasSelectedOption: Signal<boolean> = computed(() => !!this.selectedOption());
   protected availableOptions: string[] = [];
 
-  ngOnInit() {
+  public ngOnInit() {
     if (this.task?.options) {
       this.availableOptions = this.task.options;
     }
@@ -50,7 +50,7 @@ export class FillBlankComponent implements OnInit {
 
   // TODO вернуться к реализации проверки
   protected checkAnswer(): void {
-    const isCorrect: boolean = this.selectedOption() === this.task.correctAnswer;
+    const isCorrect: boolean = this.selectedOption() === this.task.correctAnswer.toString();
     this.answer.emit({
       selected: this.selectedOption() || '',
       isCorrect,

@@ -90,6 +90,12 @@ export class TasksPageComponent {
         filter((id: number) => !isNaN(id)),
         distinctUntilChanged(),
         switchMap((testId: number) => this.taskService.getByTestId(testId)),
+        map((tasks: Task[]) =>
+          tasks.map((task: Task) => ({
+            ...task,
+            audioSrc: `http://localhost:3000${task.audioSrc}`,
+          })),
+        ),
       )
       .subscribe((tasks: Task[]) => {
         this.tasks.set(tasks);
