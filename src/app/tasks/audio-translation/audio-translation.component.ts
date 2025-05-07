@@ -26,6 +26,7 @@ import {CdkDragDrop, DragDropModule, moveItemInArray} from '@angular/cdk/drag-dr
   imports: [FormsModule, TuiButton, TuiMedia, NgForOf, TuiAppearance, TuiCardLarge, DragDropModule, TuiSkeleton],
 })
 export class AudioTranslationComponent {
+  // TODO вернуться к типизации
   @Output() answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
   @Input() task: any;
 
@@ -40,6 +41,7 @@ export class AudioTranslationComponent {
   protected availableOptions: Signal<string[]> = computed(() =>
     this.task.options.filter((option: string) => !this.selectedOptions().includes(option)),
   );
+  protected hasSelectedOption: Signal<boolean> = computed(() => this.selectedOptions().length > 0);
 
   protected selectOption(option: string): void {
     this.selectedOptions.update((options: string[]) => [...options, option]);
@@ -61,7 +63,7 @@ export class AudioTranslationComponent {
   }
 
   // TODO вернуться к реализации проверки
-  protected checkAnswer(): void {
+  public checkAnswer(): void {
     const isCorrect: boolean = JSON.stringify(this.selectedOptions()) === JSON.stringify(this.task.correctAnswer);
     this.answer.emit({
       answer: this.selectedOptions().map((word, i) => [word, this.task.correctAnswer[i] || '']),

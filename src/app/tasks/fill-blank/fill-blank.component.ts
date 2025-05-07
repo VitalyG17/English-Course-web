@@ -1,10 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -23,11 +25,13 @@ import {NgForOf, NgIf} from '@angular/common';
   imports: [TuiInputInline, FormsModule, TuiAppearance, TuiCardLarge, NgForOf, TuiButton, NgIf],
 })
 export class FillBlankComponent implements OnInit {
+  // TODO вернуться к типизации
   @Input() task: any;
 
   @Output() answer = new EventEmitter<{selected: string; isCorrect: boolean}>();
 
   protected selectedOption: WritableSignal<string | null> = signal<string | null>(null);
+  protected hasSelectedOption: Signal<boolean> = computed(() => !!this.selectedOption());
   protected availableOptions: string[] = [];
 
   ngOnInit() {
@@ -38,7 +42,6 @@ export class FillBlankComponent implements OnInit {
 
   protected selectOption(option: string): void {
     this.selectedOption.set(option);
-    this.checkAnswer();
   }
 
   protected removeOption(): void {

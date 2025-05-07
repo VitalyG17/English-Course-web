@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, computed, inject, Signal, signal, WritableSignal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  Signal,
+  signal,
+  ViewChild,
+  WritableSignal,
+} from '@angular/core';
 import {TASK_TYPE_TITLES, TaskType} from '../shared/enum/TaskType';
 import {NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
 import {MatchPairsComponent} from '../match-pairs/match-pairs.component';
@@ -15,6 +24,11 @@ import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Task} from '../shared/interfaces/Task';
 import {TaskResult} from '../shared/interfaces/TaskResult';
 import {TaskProgress} from '../shared/interfaces/Progress';
+
+interface TaskComponent {
+  checkAnswer(): void;
+  hasSelectedOption?: Signal<boolean>;
+}
 
 @Component({
   selector: 'tasks-page',
@@ -44,6 +58,8 @@ export class TasksPageComponent {
   private readonly taskService: TaskService = inject(TaskService);
 
   protected taskTypeEnum: typeof TaskType = TaskType;
+
+  @ViewChild('taskComponent') protected taskComponent: TaskComponent | null = null;
 
   protected readonly tasks: WritableSignal<Task[]> = signal<Task[]>([]);
   protected readonly currentTaskIndex: WritableSignal<number> = signal(0);
@@ -89,15 +105,19 @@ export class TasksPageComponent {
     ]);
   }
 
-  protected nextTask(): void {
-    if (!this.hasAnswered()) return;
+  protected checkAndNextTask(): void {
+    if (this.taskComponent && this.taskComponent.checkAnswer) {
+      this.taskComponent.checkAnswer();
+    }
     if (this.currentTaskIndex() + 1 < this.tasks().length) {
       this.currentTaskIndex.set(this.currentTaskIndex() + 1);
-      this.hasAnswered.set(false);
     }
   }
 
-  protected completeTest(): void {
+  protected checkAndCompleteTest(): void {
+    if (this.taskComponent && this.taskComponent.checkAnswer) {
+      this.taskComponent.checkAnswer();
+    }
     console.log('Результаты теста:', this.results());
   }
 }

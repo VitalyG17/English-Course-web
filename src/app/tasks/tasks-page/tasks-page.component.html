@@ -15,22 +15,30 @@
         <ng-container *ngIf="tasks().length; else noTasks">
           <ng-container *ngIf="currentTask(); let task" [ngSwitch]="task.type">
             <match-pairs
+              #taskComponent
               *ngSwitchCase="taskTypeEnum.MATCHING"
               [task]="task"
               (answer)="handleAnswer($event)"
             ></match-pairs>
             <fill-blank
+              #taskComponent
               *ngSwitchCase="taskTypeEnum.FILL_IN_THE_BLANK"
               [task]="task"
               (answer)="handleAnswer($event)"
             ></fill-blank>
             <multiple-choice *ngSwitchCase="taskTypeEnum.MULTIPLE_CHOICE"></multiple-choice>
             <audio-translation
+              #taskComponent
               *ngSwitchCase="taskTypeEnum.AUDIO_TRANSLATION"
               [task]="task"
               (answer)="handleAnswer($event)"
             ></audio-translation>
-            <listening *ngSwitchCase="taskTypeEnum.LISTING" [task]="task" (answer)="handleAnswer($event)"></listening>
+            <listening
+              #taskComponent
+              *ngSwitchCase="taskTypeEnum.LISTING"
+              [task]="task"
+              (answer)="handleAnswer($event)"
+            ></listening>
           </ng-container>
         </ng-container>
       </main>
@@ -41,18 +49,12 @@
         *ngIf="currentTaskIndex() < tasks().length - 1"
         tuiButton
         size="m"
-        [disabled]="!hasAnswered()"
-        (click)="nextTask()"
+        [disabled]="!taskComponent?.hasSelectedOption?.()"
+        (click)="checkAndNextTask()"
       >
         Следующее задание
       </button>
-      <button
-        *ngIf="currentTaskIndex() === tasks().length - 1"
-        tuiButton
-        size="m"
-        [disabled]="!hasAnswered()"
-        (click)="completeTest()"
-      >
+      <button *ngIf="currentTaskIndex() === tasks().length - 1" tuiButton size="m" (click)="checkAndCompleteTest()">
         Завершить тест
       </button>
     </ng-container>

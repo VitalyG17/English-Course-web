@@ -1,11 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -32,6 +34,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListeningComponent implements OnInit, OnDestroy {
+  // TODO вернуться к типизации
   @Output() answer = new EventEmitter<{answer: [string, string][]; isCorrect: boolean}>();
   @Input() task: any;
 
@@ -41,6 +44,7 @@ export class ListeningComponent implements OnInit, OnDestroy {
   protected recognizedText: WritableSignal<string> = signal('');
   protected interimText: WritableSignal<string> = signal('');
   protected isSupported: WritableSignal<boolean> = signal(true);
+  protected hasSelectedOption: Signal<boolean> = computed(() => !!this.recognizedText().trim());
 
   protected currentTime: number = 0;
   protected paused: boolean = true;
@@ -92,7 +96,6 @@ export class ListeningComponent implements OnInit, OnDestroy {
         const newFinalText = this.capitalizeFirstLetter(finalTranscript.trim());
         this.recognizedText.update((text) => (text ? text + ' ' : '') + newFinalText);
         this.interimText.set('');
-        this.checkAnswer();
       }
       this.interimText.set(interimTranscript);
     };
@@ -110,7 +113,6 @@ export class ListeningComponent implements OnInit, OnDestroy {
 
     this.recognition.onend = () => {
       this.isSpeaking.set(false);
-      this.checkAnswer();
     };
 
     this.recognition.onstart = () => {
@@ -132,11 +134,10 @@ export class ListeningComponent implements OnInit, OnDestroy {
   protected handleTextInput(newText: string): void {
     this.recognizedText.set(newText);
     this.interimText.set('');
-    this.checkAnswer();
   }
 
   // TODO вернуться к реализации проверки
-  protected checkAnswer(): void {
+  public checkAnswer(): void {
     const isCorrect: boolean =
       compareTwoStrings(this.recognizedText().trim().toLowerCase(), this.task.correctAnswer[0].toLowerCase()) > 0.9;
 

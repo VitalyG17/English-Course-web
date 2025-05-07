@@ -42,6 +42,12 @@ export class MatchPairsComponent implements OnInit, OnDestroy {
   private selectedLeft: WritableSignal<string | null> = signal<string | null>(null);
   private selectedRight: WritableSignal<string | null> = signal<string | null>(null);
   private matchedPairs: WritableSignal<[string, string][]> = signal<[string, string][]>([]);
+  protected hasSelectedOption: Signal<boolean> = computed(() => {
+    if (!this.task || !this.task.correctAnswer) {
+      return false;
+    }
+    return this.matchedPairs().length === this.task.correctAnswer.length;
+  });
 
   private parsedPairs: Signal<any[]> = signal<string[]>([]);
   protected leftWords: Signal<string[]> = signal<string[]>([]);
