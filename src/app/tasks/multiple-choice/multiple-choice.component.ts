@@ -4,7 +4,6 @@ import {
   computed,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   Signal,
   signal,
@@ -24,19 +23,23 @@ import {TuiCardLarge} from '@taiga-ui/layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgForOf, ReactiveFormsModule, TuiAppearance, TuiCardLarge, TuiButton],
 })
-export class MultipleChoiceComponent implements OnInit {
-  @Input() task: Task | null = null;
+export class MultipleChoiceComponent {
   @Output() answer = new EventEmitter<{selected: string; isCorrect: boolean}>();
+
+  @Input() set task(value: Task | null) {
+    this._task = value;
+    this.updateTaskState();
+  }
+
+  get task() {
+    return this._task;
+  }
+
+  private _task: Task | null = null;
 
   protected selectedOption: WritableSignal<string | null> = signal<string | null>(null);
   protected hasSelectedOption: Signal<boolean> = computed(() => !!this.selectedOption());
   protected availableOptions: string[] = [];
-
-  public ngOnInit(): void {
-    if (this.task?.options) {
-      this.availableOptions = this.task.options;
-    }
-  }
 
   protected selectOption(option: string): void {
     this.selectedOption.set(option);
@@ -48,5 +51,10 @@ export class MultipleChoiceComponent implements OnInit {
       selected: this.selectedOption() || '',
       isCorrect,
     });
+  }
+
+  private updateTaskState(): void {
+    this.selectedOption.set(null);
+    this.availableOptions = this.task?.options ?? [];
   }
 }

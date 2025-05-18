@@ -4,7 +4,6 @@ import {
   computed,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   Signal,
   signal,
@@ -15,6 +14,7 @@ import {FormsModule} from '@angular/forms';
 import {TuiAppearance, TuiButton} from '@taiga-ui/core';
 import {TuiCardLarge} from '@taiga-ui/layout';
 import {NgForOf, NgIf} from '@angular/common';
+import {Task} from '../shared/interfaces/Task';
 
 @Component({
   selector: 'fill-blank',
@@ -24,21 +24,22 @@ import {NgForOf, NgIf} from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TuiInputInline, FormsModule, TuiAppearance, TuiCardLarge, NgForOf, TuiButton, NgIf],
 })
-export class FillBlankComponent implements OnInit {
-  // TODO вернуться к типизации
-  @Input() task: any;
-
+export class FillBlankComponent {
   @Output() answer = new EventEmitter<{selected: string; isCorrect: boolean}>();
+
+  @Input() set task(value: Task | null) {
+    this._task = value;
+    this.updateTaskState();
+  }
+  get task() {
+    return this._task;
+  }
+
+  private _task: Task | null = null;
 
   protected selectedOption: WritableSignal<string | null> = signal<string | null>(null);
   protected hasSelectedOption: Signal<boolean> = computed(() => !!this.selectedOption());
   protected availableOptions: string[] = [];
-
-  public ngOnInit() {
-    if (this.task?.options) {
-      this.availableOptions = this.task.options;
-    }
-  }
 
   protected selectOption(option: string): void {
     this.selectedOption.set(option);
@@ -50,10 +51,15 @@ export class FillBlankComponent implements OnInit {
 
   // TODO вернуться к реализации проверки
   protected checkAnswer(): void {
-    const isCorrect: boolean = this.selectedOption() === this.task.correctAnswer.toString();
+    const isCorrect: boolean = this.selectedOption() === this.task?.correctAnswer.toString();
     this.answer.emit({
       selected: this.selectedOption() || '',
       isCorrect,
     });
+  }
+
+  private updateTaskState(): void {
+    this.selectedOption.set(null);
+    this.availableOptions = this.task?.options ?? [];
   }
 }
