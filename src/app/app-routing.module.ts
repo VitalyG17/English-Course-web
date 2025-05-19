@@ -9,6 +9,8 @@ import {CoursesPageComponent} from './courses/courses-page/courses-page.componen
 import {AchievementsComponent} from './achievements/achievements.component';
 import {CoursesTestsComponent} from './courses-tests/courses-tests.component';
 import {TasksPageComponent} from './tasks/tasks-page/tasks-page.component';
+import {ResultPageComponent} from './tasks/result-page/result-page.component';
+import {resultGuard} from '../shared/guards/result.guard';
 
 const routes: Routes = [
   {
@@ -30,6 +32,11 @@ const routes: Routes = [
       {
         path: 'courses/:courseId/tests/:testId/tasks',
         component: TasksPageComponent,
+      },
+      {
+        path: 'courses/:courseId/tests/:testId/result',
+        component: ResultPageComponent,
+        canActivate: [resultGuard],
       },
       {
         path: 'achievements',

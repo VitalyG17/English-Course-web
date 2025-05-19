@@ -1,0 +1,41 @@
+<div class="result-page__container">
+  <div tuiAppearance="floating" tuiCardLarge>
+    <tui-loader [showLoader]="isLoading()" [overlay]="true" size="l">
+      <main class="result-page__main">
+        <ng-container>
+          <h1 class="result-page__title">Так держать!</h1>
+          <img
+            src="https://media1.tenor.com/m/6rTPusi4YJcAAAAd/sigma-sigma-male.gif"
+            alt="Sigma Male GIF"
+            style="width: 30%; border-radius: 40%"
+          />
+          <div class="result-page__stats-container">
+            <div class="result-page__stats">
+              <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
+                <h1 tuiTitle>
+                  Правильных ответов
+                  <span tuiSubtitle
+                    >{{ totalTasks - errors }} <span> ({{ totalTasks | percentageCorrect: errors }}%)</span></span
+                  >
+                </h1>
+              </button>
+              <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
+                <h1 tuiTitle>
+                  Ошибок
+                  <span tuiSubtitle>{{ errors }} из {{ totalTasks }}</span>
+                </h1>
+              </button>
+              <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
+                <h1 tuiTitle>
+                  Время прохождения
+                  <span tuiSubtitle>{{ timeSpent | reformDate }} </span>
+                </h1>
+              </button>
+            </div>
+            <button tuiButton size="m" style="width: 100%" [routerLink]="['/']">Продолжить</button>
+          </div>
+        </ng-container>
+      </main>
+    </tui-loader>
+  </div>
+</div>

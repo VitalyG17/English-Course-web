@@ -20,7 +20,7 @@ import {AudioTranslationComponent} from '../audio-translation/audio-translation.
 import {ListeningComponent} from '../listening/listening.component';
 import {TaskService} from '../shared/services/task.service';
 import {distinctUntilChanged, filter, map, switchMap} from 'rxjs';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Task} from '../shared/interfaces/Task';
 import {TaskResult} from '../shared/interfaces/TaskResult';
 import {TaskProgress} from '../shared/interfaces/Progress';
@@ -55,6 +55,7 @@ interface TaskComponent {
 })
 export class TasksPageComponent {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly router: Router = inject(Router);
   private readonly taskService: TaskService = inject(TaskService);
 
   protected taskTypeEnum: typeof TaskType = TaskType;
@@ -66,6 +67,8 @@ export class TasksPageComponent {
   protected readonly hasAnswered: WritableSignal<boolean> = signal(false);
   protected readonly results: WritableSignal<TaskResult[]> = signal<TaskResult[]>([]);
   protected readonly isLoading: WritableSignal<boolean> = signal(true);
+  protected readonly startTime: WritableSignal<number> = signal(Date.now());
+  protected readonly timeSpent: WritableSignal<number> = signal(0);
 
   protected readonly currentTask: Signal<Task> = computed(() => this.tasks()[this.currentTaskIndex()] ?? null);
 
@@ -84,6 +87,7 @@ export class TasksPageComponent {
 
   private initTest(): void {
     this.isLoading.set(true);
+    this.startTime.set(Date.now());
     this.route.paramMap
       .pipe(
         map((params: ParamMap) => Number(params.get('testId'))),
@@ -124,6 +128,19 @@ export class TasksPageComponent {
     if (this.taskComponent && this.taskComponent.checkAnswer) {
       this.taskComponent.checkAnswer();
     }
-    console.log('Результаты теста:', this.results());
+    this.timeSpent.set(Math.round((Date.now() - this.startTime()) / 1000));
+
+    this.router.navigate(
+      [
+        `/courses/${this.route.snapshot.paramMap.get('courseId')}/tests/${this.route.snapshot.paramMap.get('testId')}/result`,
+      ],
+      {
+        state: {
+          timeSpent: this.timeSpent(),
+          errors: this.results().filter((result: TaskResult) => !result.isCorrect).length,
+          totalTasks: this.tasks().length,
+        },
+      },
+    );
   }
 }

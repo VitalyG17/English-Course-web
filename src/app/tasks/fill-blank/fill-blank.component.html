@@ -1,7 +1,7 @@
 <div class="fill-blank">
   <div class="fill-blank__question-area" tuiAppearance="floating" tuiCardLarge>
     <div class="fill-blank__question">
-      <ng-container *ngFor="let part of task.question">
+      <ng-container *ngFor="let part of task?.question">
         <ng-container *ngIf="part !== '__BLANK__'; else blank">
           {{ part }}
         </ng-container>

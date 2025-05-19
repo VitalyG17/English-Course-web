@@ -35,6 +35,7 @@ import {MultipleChoiceComponent} from './tasks/multiple-choice/multiple-choice.c
 import {AudioTranslationComponent} from './tasks/audio-translation/audio-translation.component';
 import {ListeningComponent} from './tasks/listening/listening.component';
 import {TaskService} from './tasks/shared/services/task.service';
+import {ResultPageComponent} from './tasks/result-page/result-page.component';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -72,6 +73,7 @@ import {TaskService} from './tasks/shared/services/task.service';
     MultipleChoiceComponent,
     AudioTranslationComponent,
     ListeningComponent,
+    ResultPageComponent,
   ],
   providers: [
     AuthService,
