@@ -9,6 +9,8 @@ export class CoursesTests {
   progress: UserTestProgress;
   isStarted: boolean;
   isCompleted: boolean;
+  score?: number;
+  completedAt?: string;
 
   constructor(
     id: number = 0,
@@ -19,6 +21,8 @@ export class CoursesTests {
     progress: UserTestProgress,
     isStarted: boolean = false,
     isCompleted: boolean = false,
+    score: number = 0,
+    completedAt: string = '',
   ) {
     this.id = id;
     this.title = title;
@@ -28,5 +32,7 @@ export class CoursesTests {
     this.progress = progress;
     this.isStarted = isStarted;
     this.isCompleted = isCompleted;
+    this.score = score;
+    this.completedAt = completedAt;
   }
 }

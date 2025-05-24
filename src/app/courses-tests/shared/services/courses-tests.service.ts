@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {SnackBarService} from '../../../../shared/services/snack-bar.service';
-import {catchError, Observable, of} from 'rxjs';
+import {catchError, Observable, of, throwError} from 'rxjs';
 import {CoursesTests} from '../models/courses-tests.model';
 
 @Injectable()
@@ -19,6 +19,19 @@ export class CoursesTestsService {
         console.error(err);
         this.snackBarService.errorShow('Ошибка получения тестов');
         return of([]);
+      }),
+    );
+  }
+
+  public completeTest(
+    testId: number,
+    result: {errors: number; totalTasks: number; timeSpent: number},
+  ): Observable<CoursesTests> {
+    return this.httpClient.post<CoursesTests>(`${this.baseApiUrl}/${testId}/complete`, result).pipe(
+      catchError((err: HttpErrorResponse) => {
+        console.error(err);
+        this.snackBarService.errorShow('Ошибка при завершении теста');
+        return throwError(() => err);
       }),
     );
   }

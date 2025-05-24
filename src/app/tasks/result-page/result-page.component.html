@@ -15,24 +15,27 @@
                 <h1 tuiTitle>
                   Правильных ответов
                   <span tuiSubtitle
-                    >{{ totalTasks - errors }} <span> ({{ totalTasks | percentageCorrect: errors }}%)</span></span
+                    >{{ state().totalTasks - state().errors }}
+                    <span> ({{ state().totalTasks | percentageCorrect: state().errors }}%)</span></span
                   >
                 </h1>
               </button>
               <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
                 <h1 tuiTitle>
                   Ошибок
-                  <span tuiSubtitle>{{ errors }} из {{ totalTasks }}</span>
+                  <span tuiSubtitle>{{ state().errors }} из {{ state().totalTasks }}</span>
                 </h1>
               </button>
               <button tuiCardLarge tuiHeader tuiSurface="floating" type="button">
                 <h1 tuiTitle>
                   Время прохождения
-                  <span tuiSubtitle>{{ timeSpent | reformDate }} </span>
+                  <span tuiSubtitle>{{ state().timeSpent | reformDate }} </span>
                 </h1>
               </button>
             </div>
-            <button tuiButton size="m" style="width: 100%" [routerLink]="['/']">Продолжить</button>
+            <button tuiButton size="m" style="width: 100%" (click)="onContinue()">
+              {{ nextTest() ? 'Перейти к следующему' : 'Обзор курса' }}
+            </button>
           </div>
         </ng-container>
       </main>
