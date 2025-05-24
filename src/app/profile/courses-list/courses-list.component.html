@@ -2,9 +2,23 @@
   <header tuiHeader>
     <h1 tuiTitle>Пройденные курсы</h1>
   </header>
-  <section>
-    <div *tuiRepeatTimes="let index of 10" class="cards" tuiAppearance="neutral" tuiCardMedium>
-      <h2 tuiTitle>Название курса</h2>
-    </div>
-  </section>
+  <ng-container *ngIf="completedCourses().length > 0; else noCourses" style="overflow: scroll">
+    <button
+      *ngFor="let course of completedCourses()"
+      style="cursor: pointer"
+      tuiAppearance="floating"
+      tuiCardMedium
+      type="button"
+      [routerLink]="['/courses', course.id, 'tests']"
+    >
+      <tui-avatar [src]="course.imageUrl" />
+      <h2 tuiTitle>{{ course.title }}</h2>
+    </button>
+  </ng-container>
 </div>
+
+<ng-template #noCourses>
+  <button appearance="secondary-grayscale" tuiButton type="button" routerLink="/courses">
+    Начните обучение прямо сейчас
+  </button>
+</ng-template>
