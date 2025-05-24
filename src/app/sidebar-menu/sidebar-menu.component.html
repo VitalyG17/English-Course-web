@@ -75,13 +75,13 @@
         {{ expanded() ? 'Свернуть' : 'Раскрыть' }}
       </button>
       <hr />
-      <button style="padding: 0.13rem" tuiAsideItem type="button">
+      <button style="padding: 0.13rem" tuiAsideItem type="button" routerLink="/profile">
         <tui-avatar
           style="--t-radius: 0"
-          [src]="'https://clck.ru/3Kyq6G' | tuiFallbackSrc: '@tui.user' | async"
+          [src]="profileInfo().avatarUrl | tuiFallbackSrc: '@tui.user' | async"
           size="s"
         />
-        <span>Ryan Gosling</span>
+        <span tuiFade>{{ profileInfo().name }} {{ profileInfo().surname }}</span>
       </button>
     </footer>
   </aside>
