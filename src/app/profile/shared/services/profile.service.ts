@@ -4,6 +4,7 @@ import {catchError, EMPTY, Observable} from 'rxjs';
 import {Profile} from '../models/profile.model';
 import {SnackBarService} from '../../../../shared/services/snack-bar.service';
 import {UploadResponse} from '../interfaces/uploadResponce.interface';
+import {TrainingProgress} from '../interfaces/trainingProgress.interface';
 
 @Injectable()
 export class ProfileService {
@@ -19,6 +20,16 @@ export class ProfileService {
       catchError((err: HttpErrorResponse) => {
         console.error(err);
         this.snackBarService.errorShow('Ошибка получения профиля');
+        return EMPTY;
+      }),
+    );
+  }
+
+  public getTrainingProgress(): Observable<TrainingProgress> {
+    return this.httpClient.get<TrainingProgress>(`${this.baseApiUrl}/training-stats`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        console.error(err);
+        this.snackBarService.errorShow('Ошибка получения дней обучения');
         return EMPTY;
       }),
     );

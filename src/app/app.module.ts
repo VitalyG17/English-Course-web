@@ -36,6 +36,9 @@ import {AudioTranslationComponent} from './tasks/audio-translation/audio-transla
 import {ListeningComponent} from './tasks/listening/listening.component';
 import {TaskService} from './tasks/shared/services/task.service';
 import {ResultPageComponent} from './tasks/result-page/result-page.component';
+import {CalendarComponent} from './calendar/calendar.component';
+import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n';
+import {of} from 'rxjs';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
@@ -74,8 +77,13 @@ import {ResultPageComponent} from './tasks/result-page/result-page.component';
     AudioTranslationComponent,
     ListeningComponent,
     ResultPageComponent,
+    CalendarComponent,
   ],
   providers: [
+    {
+      provide: TUI_LANGUAGE,
+      useValue: of(TUI_RUSSIAN_LANGUAGE),
+    },
     AuthService,
     ProfileService,
     CoursesService,

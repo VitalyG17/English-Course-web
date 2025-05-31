@@ -14,7 +14,7 @@ export class AchievementsService {
   ) {}
 
   public getAllAchievements(): Observable<Achievement[]> {
-    return this.httpClient.get<Achievement[]>(`${this.baseApiUrl}/getAll`).pipe(
+    return this.httpClient.get<Achievement[]>(`${this.baseApiUrl}/allAchievements`).pipe(
       catchError((err: HttpErrorResponse) => {
         console.error(err);
         this.snackBarService.errorShow('Ошибка получения достижений');

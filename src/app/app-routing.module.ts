@@ -11,6 +11,7 @@ import {CoursesTestsComponent} from './courses-tests/courses-tests.component';
 import {TasksPageComponent} from './tasks/tasks-page/tasks-page.component';
 import {ResultPageComponent} from './tasks/result-page/result-page.component';
 import {resultGuard} from '../shared/guards/result.guard';
+import {CalendarComponent} from './calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'achievements',
         component: AchievementsComponent,
+      },
+      {
+        path: 'calendar',
+        component: CalendarComponent,
       },
     ],
     canActivate: [canActivateAuth],

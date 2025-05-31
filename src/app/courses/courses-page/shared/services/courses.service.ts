@@ -14,7 +14,7 @@ export class CoursesService {
   ) {}
 
   public getAllWithProgress(): Observable<Courses[]> {
-    return this.httpClient.get<Courses[]>(`${this.baseApiUrl}/getAllWithProgress`).pipe(
+    return this.httpClient.get<Courses[]>(`${this.baseApiUrl}/allCoursesWithProgress`).pipe(
       catchError((err: HttpErrorResponse) => {
         console.error(err);
         this.snackBarService.errorShow('Ошибка получения курсов');

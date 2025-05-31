@@ -1,23 +1,41 @@
-<div tuiAppearance="floating" tuiCardMedium style="width: 100%">
-  <div class="header-wrapper">
+<div tuiAppearance="floating" tuiCardMedium class="training">
+  <div class="training__header">
     <header tuiHeader>
-      <h1 tuiTitle>Дни обучения</h1>
+      <h1 tuiTitle>Календарь обучения</h1>
     </header>
     <header tuiHeader>
       <h1 tuiTitle>Серия ежедневных занятий</h1>
     </header>
   </div>
 
-  <div class="progress-training-wrapper">
-    <div class="days-grid">
-      <ng-container *ngFor="let day of days">
-        <div class="day">
-          <tui-avatar *ngIf="day.active" size="m" [src]="'assets/img/fire-activity.png'"></tui-avatar>
-          <span *ngIf="!day.active" class="inactive-circle"></span>
-          <div class="day-label">{{ day.short }}</div>
-        </div>
-      </ng-container>
+  <div class="training__content">
+    <ng-container *ngIf="progress().days.length">
+      <tui-calendar
+        class="training__calendar"
+        tuiAppearance="floating"
+        tuiCardMedium
+        [markerHandler]="markerHandler"
+        [max]="MAX_DATE"
+        [min]="MIN_DATE"
+      />
+    </ng-container>
+
+    <div class="training__activity">
+      <span class="training__streak">{{ progress().streak }}</span>
+      <div class="training__days-grid">
+        <ng-container *ngFor="let day of weekDays()">
+          <div class="training__day">
+            <tui-avatar
+              *ngIf="day.active"
+              class="fire-animation"
+              size="m"
+              [src]="'assets/img/fire-activity.png'"
+            ></tui-avatar>
+            <span *ngIf="!day.active" class="training__inactive-circle"></span>
+            <div class="training__day-label">{{ day.short }}</div>
+          </div>
+        </ng-container>
+      </div>
     </div>
-    <span class="info-number">12</span>
   </div>
 </div>
