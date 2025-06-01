@@ -13,7 +13,7 @@
   &__content {
     display: flex;
     flex-direction: row;
-    gap: 50%;
+    gap: 10.5rem;
   }
 
   &__activity {
@@ -55,6 +55,20 @@
     font-weight: bold;
     color: #2cc328;
     padding: 50px;
+  }
+}
+
+.calendar {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &-chip {
+    width: 100%;
+    font-weight: 500;
+    justify-content: center;
   }
 }
 

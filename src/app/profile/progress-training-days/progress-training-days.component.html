@@ -9,17 +9,18 @@
   </div>
 
   <div class="training__content">
-    <ng-container *ngIf="progress().days.length">
-      <tui-calendar
-        class="training__calendar"
-        tuiAppearance="floating"
-        tuiCardMedium
+    <div class="calendar-container">
+      <tui-calendar-range
         [markerHandler]="markerHandler"
         [max]="MAX_DATE"
         [min]="MIN_DATE"
+        [items]="calendarRangeFilter"
+        (valueChange)="onRangeChange($event)"
       />
-    </ng-container>
-
+      <tui-chip class="calendar-chip" appearance="positive">
+        Активных дней за период: {{ activeDaysCount() }}
+      </tui-chip>
+    </div>
     <div class="training__activity">
       <span class="training__streak">{{ progress().streak }}</span>
       <div class="training__days-grid">
